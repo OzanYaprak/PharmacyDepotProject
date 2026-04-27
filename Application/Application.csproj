@@ -6,4 +6,23 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Drugs\Commands\Delete\" />
+    <Folder Include="Features\Drugs\Commands\Update\" />
+    <Folder Include="Features\Drugs\Constants\" />
+    <Folder Include="Features\Drugs\Rules\" />
+    <Folder Include="Features\Drugs\Profiles\" />
+    <Folder Include="Features\Drugs\Queries\" />
+    <Folder Include="Features\Suppliers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="14.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Persistence\Persistence.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -2,7 +2,7 @@
 
 public class Drug : BaseEntity<Guid>
 {
-    protected Drug() { } // EF Core için
+    protected Drug() { }
     public Drug(Guid id, string name, string gtin, string sn, string bn, DateTime expireDate)
     {
         Id = id;
@@ -10,7 +10,7 @@ public class Drug : BaseEntity<Guid>
         GTIN = gtin;
         SN = sn;
         BN = bn;
-        ExpireDate = expireDate;
+        ExpireDate = expireDate.AddYears(3);
     }
 
     public string Name { get; set; }

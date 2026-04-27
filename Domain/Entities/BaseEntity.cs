@@ -2,7 +2,7 @@
 
 public abstract class BaseEntity<TId> where TId : notnull
 {
-    protected BaseEntity() { } // EF Core için
+    protected BaseEntity() { }
 
     protected BaseEntity(TId id)
     {
