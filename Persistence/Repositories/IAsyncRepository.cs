@@ -1,5 +1,7 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore.Query;
+using Persistence.Dynamic;
+using Persistence.Paging;
 using System.Linq.Expressions;
 
 namespace Persistence.Repositories;
@@ -16,7 +18,7 @@ public interface IAsyncRepository<TEntity, TEntityId> : ISqlQuery<TEntity>
         bool asNoTracking = false,
         CancellationToken cancellationToken = default);
 
-    Task<IPaginate<TEntity>> GetListAsync(
+    Task<Paginate<TEntity>> GetListAsync(
         Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
@@ -26,7 +28,7 @@ public interface IAsyncRepository<TEntity, TEntityId> : ISqlQuery<TEntity>
         bool asNoTracking = false,
         CancellationToken cancellationToken = default);
 
-    Task<IPaginate<TEntity>> GetListByDynamicAsync(
+    Task<Paginate<TEntity>> GetListByDynamicAsync(
         DynamicQuery dynamic,
         Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
