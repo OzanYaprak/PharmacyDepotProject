@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Persistence.Repositories;
+namespace Persistence.Repositories.Interfaces;
 
 /// <summary>
 /// Generic entity türleri üzerinde LINQ tabanlı sorgulama yapabilmek için kullanılan arayüzdür.

@@ -4,7 +4,7 @@ using Persistence.Dynamic;
 using Persistence.Paging;
 using System.Linq.Expressions;
 
-namespace Persistence.Repositories;
+namespace Persistence.Repositories.Interfaces;
 
 /// <summary>
 /// Tüm entity'ler için generic asenkron repository arayüzü.

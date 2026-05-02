@@ -1,9 +1,11 @@
 using Application;
 using Microsoft.OpenApi;
+using Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplicationServices(); // Add services from the Application assembly
+builder.Services.AddPersistenceServices(builder.Configuration); // Add services from the Persistence assembly
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Query;
 using Persistence.Dynamic;
 using Persistence.Dynamic.Extensions;
 using Persistence.Paging;
+using Persistence.Repositories.Interfaces;
 using System.Collections;
 using System.Linq.Expressions;
 using System.Reflection;
