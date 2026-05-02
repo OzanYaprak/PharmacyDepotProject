@@ -10,7 +10,7 @@ public class Drug : BaseEntity<Guid>
     /// <summary>
     /// EF Core için parametresiz constructor. Doğrudan kullanılmaz.
     /// </summary>
-    protected Drug() { }
+    public Drug() { }
 
     /// <summary>
     /// Yeni bir ilaç nesnesi oluşturur.
