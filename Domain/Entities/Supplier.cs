@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities;
+﻿using Domain.Entities.Base;
+
+namespace Domain.Entities;
 
 public class Supplier : BaseEntity<Guid>
 {

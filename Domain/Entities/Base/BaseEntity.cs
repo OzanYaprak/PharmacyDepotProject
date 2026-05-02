@@ -1,6 +1,8 @@
-﻿namespace Domain.Entities;
+﻿using Domain.Entities.Interfaces;
 
-public abstract class BaseEntity<TId> where TId : notnull
+namespace Domain.Entities.Base;
+
+public abstract class BaseEntity<TId> : IEntityTimeStamps where TId : notnull
 {
     protected BaseEntity() { }
 
