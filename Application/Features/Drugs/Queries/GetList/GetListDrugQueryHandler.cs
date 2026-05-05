@@ -9,6 +9,8 @@ namespace Application.Features.Drugs.Queries.GetList;
 
 public class GetListDrugQueryHandler : IRequestHandler<GetListDrugQuery, GetListResponse<GetListDrugListItemDTO>>
 {
+    #region Constructor Injection
+
     private readonly IDrugRepository _drugRepository;
     private readonly IMapper _mapper;
     public GetListDrugQueryHandler(IDrugRepository drugRepository, IMapper mapper)
@@ -16,6 +18,8 @@ public class GetListDrugQueryHandler : IRequestHandler<GetListDrugQuery, GetList
         _drugRepository = drugRepository;
         _mapper = mapper;
     }
+
+    #endregion
 
     public async Task<GetListResponse<GetListDrugListItemDTO>> Handle(GetListDrugQuery request, CancellationToken cancellationToken)
     {

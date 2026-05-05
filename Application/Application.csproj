@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Features\Drugs\Commands\Delete\" />
-    <Folder Include="Features\Drugs\Commands\Update\" />
     <Folder Include="Features\Drugs\Constants\" />
     <Folder Include="Features\Drugs\Rules\" />
     <Folder Include="Features\Drugs\Profiles\" />

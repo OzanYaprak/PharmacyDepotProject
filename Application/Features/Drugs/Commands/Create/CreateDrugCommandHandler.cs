@@ -7,6 +7,8 @@ namespace Application.Features.Drugs.Commands.Create;
 
 public class CreateDrugCommandHandler : IRequestHandler<CreateDrugCommand, CreatedDrugResponse>
 {
+    #region Constructor Injection
+
     private readonly IDrugRepository _drugRepository;
     private readonly IMapper _mapper;
 
@@ -15,6 +17,8 @@ public class CreateDrugCommandHandler : IRequestHandler<CreateDrugCommand, Creat
         _drugRepository = drugRepository;
         _mapper = mapper;
     }
+
+    #endregion
 
     public async Task<CreatedDrugResponse> Handle(CreateDrugCommand request, CancellationToken cancellationToken)
     {
@@ -29,4 +33,3 @@ public class CreateDrugCommandHandler : IRequestHandler<CreateDrugCommand, Creat
         return createdDrugResponse;
     }
 }
-
