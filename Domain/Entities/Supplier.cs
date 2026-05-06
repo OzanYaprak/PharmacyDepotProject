@@ -57,4 +57,8 @@ public class Supplier : BaseEntity<Guid>
     /// Tedarikçinin fiziksel adres bilgisi
     /// </summary>
     public string Address { get; set; }
+
+    // Navigation Properties
+    /// <summary>Bu tedarikçiye ait siparişler.</summary>
+    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }

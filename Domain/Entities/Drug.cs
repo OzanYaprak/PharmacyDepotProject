@@ -45,4 +45,14 @@ public class Drug : BaseEntity<Guid>
 
     /// <summary>İlacın son kullanma tarihi.</summary>
     public DateTime ExpireDate { get; set; }
+
+    // Navigation Properties
+    /// <summary>Bu ilaca ait stok kayıtları.</summary>
+    public virtual ICollection<Stock> Stocks { get; set; } = new List<Stock>();
+
+    /// <summary>Bu ilacın yer aldığı sipariş kalemleri.</summary>
+    public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+
+    /// <summary>Bu ilacın yer aldığı satış kalemleri.</summary>
+    public virtual ICollection<SaleItem> SaleItems { get; set; } = new List<SaleItem>();
 }

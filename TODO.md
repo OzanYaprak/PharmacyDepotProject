@@ -32,28 +32,28 @@
 - [x] `Interfaces\IEntityTimeStamps.cs` *(mevcut)*
 - [x] `Drug.cs` *(mevcut)*
 - [x] `Supplier.cs` — Tedarikçi firması *(mevcut)*
-- [ ] `Warehouse.cs` — Depo / raf bilgisi
+- [x] `Warehouse.cs` — Depo / raf bilgisi
   - `Id (Guid)`, `Name`, `Location`, `Capacity`
-- [ ] `Stock.cs` — İlaç stok hareketi
+- [x] `Stock.cs` — İlaç stok hareketi
   - `Id (Guid)`, `DrugId (FK)`, `WarehouseId (FK)`, `Quantity`, `UnitPrice`
   - Navigation: `Drug`, `Warehouse`
-- [ ] `Customer.cs` — Müşteri eczane
+- [x] `Customer.cs` — Müşteri eczane
   - `Id (Guid)`, `Name`, `LicenseNumber`, `Phone`, `Email`, `Address`
-- [ ] `Order.cs` — Satın alma siparişi
+- [x] `Order.cs` — Satın alma siparişi
   - `Id (Guid)`, `SupplierId (FK)`, `OrderDate`, `Status (enum)`
   - Navigation: `Supplier`, `OrderItems`
-- [ ] `OrderItem.cs` — Sipariş kalemi
+- [x] `OrderItem.cs` — Sipariş kalemi
   - `Id (Guid)`, `OrderId (FK)`, `DrugId (FK)`, `Quantity`, `UnitPrice`
   - Navigation: `Order`, `Drug`
-- [ ] `Sale.cs` — Satış kaydı
+- [x] `Sale.cs` — Satış kaydı
   - `Id (Guid)`, `CustomerId (FK)`, `SaleDate`, `TotalAmount`
   - Navigation: `Customer`, `SaleItems`
-- [ ] `SaleItem.cs` — Satış kalemi
+- [x] `SaleItem.cs` — Satış kalemi
   - `Id (Guid)`, `SaleId (FK)`, `DrugId (FK)`, `Quantity`, `UnitPrice`
   - Navigation: `Sale`, `Drug`
 
 ### 2.2 Enum'lar `Domain\Enums\`
-- [ ] `OrderStatus.cs` → `Pending`, `Confirmed`, `Shipped`, `Delivered`, `Cancelled`
+- [x] `OrderStatus.cs` → `Pending`, `Confirmed`, `Shipped`, `Delivered`, `Cancelled`
 
 ### 2.3 Exception Sınıfları `Domain\Exceptions\`
 - [ ] `NotFoundException.cs` — Genel bulunamadı exception'ı
