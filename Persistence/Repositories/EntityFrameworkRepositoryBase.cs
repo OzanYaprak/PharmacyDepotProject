@@ -136,13 +136,18 @@ public class EntityFrameworkRepositoryBase<TEntity, TEntityId, TContext> : IAsyn
     /// <param name="predicate">Filtreleme koşulu. <c>null</c> verilirse tüm kayıtlar listelenir.</param>
     /// <param name="orderBy">Sıralama ifadesi.</param>
     /// <param name="include">İlişkili entity'leri eager loading ile yüklemek için kullanılan include ifadesi.</param>
-    /// <param name="index">Sayfa numarası (0 tabanlı).</param>
-    /// <param name="size">Sayfada gösterilecek kayıt sayısı.</param>
+    /// <param name="pageNumber">Sayfa numarası (0 tabanlı).</param>
+    /// <param name="pageSize">Sayfada gösterilecek kayıt sayısı.</param>
     /// <param name="withDeleted">Soft delete yapılmış kayıtların da dahil edilip edilmeyeceğini belirtir.</param>
     /// <param name="enableTracking">EF Core change tracking'in etkin olup olmadığını belirtir.</param>
     /// <param name="cancellationToken">İşlemi iptal etmek için kullanılan token.</param>
     /// <returns>Sayfalanmış entity listesini içeren <see cref="Paginate{TEntity}"/> nesnesi.</returns>
-    public async Task<Paginate<TEntity>> GetListAsync(Expression<Func<TEntity, bool>>? predicate = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, int index = 0, int size = 10, bool withDeleted = false, bool enableTracking = false, CancellationToken cancellationToken = default)
+    public async Task<Paginate<TEntity>> GetListAsync(
+        Expression<Func<TEntity, bool>>? predicate = null, 
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null, 
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, 
+        int pageNumber = 0, int pageSize = 10, bool withDeleted = false, bool enableTracking = false, 
+        CancellationToken cancellationToken = default)
     {
         IQueryable<TEntity> queryable = Query();
 
@@ -150,9 +155,9 @@ public class EntityFrameworkRepositoryBase<TEntity, TEntityId, TContext> : IAsyn
         if (include != null) { queryable = include(queryable); }
         if (withDeleted) { queryable = queryable.IgnoreQueryFilters(); }
         if (predicate != null) { queryable = queryable.Where(predicate); }
-        if (orderBy != null) { return await orderBy(queryable).ToPaginateAsync(index, size, cancellationToken); }
+        if (orderBy != null) { return await orderBy(queryable).ToPaginateAsync(pageNumber, pageSize, cancellationToken); }
             
-        return await queryable.ToPaginateAsync(index, size, cancellationToken);
+        return await queryable.ToPaginateAsync(pageNumber, pageSize, cancellationToken);
     }
 
     /// <summary>

@@ -1,4 +1,5 @@
 ﻿using Application.Features.Drugs.Commands.Create;
+using Application.Features.Drugs.Commands.Delete;
 using Application.Features.Drugs.Commands.Update;
 using Application.Features.Drugs.Queries.GetById;
 using Application.Features.Drugs.Queries.GetList;
@@ -34,10 +35,18 @@ public class DrugsController : BaseController
         return Ok(response);
     }
 
-    [HttpPut("{id}")]
+    [HttpPut]
     public async Task<IActionResult> UpdateDrug([FromBody] UpdateDrugCommand updateDrugCommand)
     {
         UpdateDrugResponse response = await Mediator.Send(updateDrugCommand);
+        return Ok(response);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteDrug([FromRoute] Guid id)
+    {
+        DeleteDrugCommand command = new DeleteDrugCommand { Id = id };
+        DeleteDrugResponse response = await Mediator.Send(command);
         return Ok(response);
     }
 }

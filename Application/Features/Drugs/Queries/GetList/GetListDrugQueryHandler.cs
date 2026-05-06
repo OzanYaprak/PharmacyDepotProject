@@ -25,8 +25,9 @@ public class GetListDrugQueryHandler : IRequestHandler<GetListDrugQuery, GetList
     {
         Paginate<Drug> drugs = await _drugRepository
             .GetListAsync(
-            index: request.PageRequest?.PageIndex ?? 0,
-            size: request.PageRequest?.PageSize ?? 10,
+            pageNumber: request.PageRequest?.PageNumber ?? 0,
+            pageSize: request.PageRequest?.PageSize ?? 10,
+            withDeleted: true,
             cancellationToken: cancellationToken);
 
         GetListResponse<GetListDrugListItemDTO> response = _mapper.Map<GetListResponse<GetListDrugListItemDTO>>(drugs);

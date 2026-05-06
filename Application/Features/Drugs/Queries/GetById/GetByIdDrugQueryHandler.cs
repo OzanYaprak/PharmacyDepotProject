@@ -21,8 +21,9 @@ public class GetByIdDrugQueryHandler : IRequestHandler<GetByIdDrugQuery, GetById
 
     public async Task<GetByIdDrugResponse> Handle(GetByIdDrugQuery request, CancellationToken cancellationToken)
     {
-         Drug? drug = await _drugRepository
-            .GetAsync(
+        Drug? drug = await _drugRepository
+           .GetAsync(
+            withDeleted: true,
             predicate: d => d.Id == request.Id,
             cancellationToken: cancellationToken);
 

@@ -22,7 +22,9 @@ public class UpdateDrugCommandHandler : IRequestHandler<UpdateDrugCommand, Updat
 
     public async Task<UpdateDrugResponse> Handle(UpdateDrugCommand request, CancellationToken cancellationToken)
     {
-        Drug? drug = await _drugRepository.GetAsync(predicate: d => d.Id == request.Id, cancellationToken: cancellationToken);
+        Drug? drug = await _drugRepository.GetAsync(
+            predicate: d => d.Id == request.Id, 
+            cancellationToken: cancellationToken);
 
         if (drug is null)
         {

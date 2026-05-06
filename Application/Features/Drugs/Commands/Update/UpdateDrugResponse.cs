@@ -8,4 +8,6 @@ public class UpdateDrugResponse
     public string? SN { get; set; }
     public string? BN { get; set; }
     public DateTime? ExpireDate { get; set; }
+    public DateTime CreatedDate { get; set; }
+    public DateTime UpdatedDate { get; set; }
 }

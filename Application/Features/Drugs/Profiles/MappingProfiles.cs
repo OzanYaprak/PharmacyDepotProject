@@ -1,4 +1,5 @@
 using Application.Features.Drugs.Commands.Create;
+using Application.Features.Drugs.Commands.Delete;
 using Application.Features.Drugs.Commands.Update;
 using Application.Features.Drugs.Queries.GetById;
 using Application.Features.Drugs.Queries.GetList;
@@ -16,11 +17,14 @@ public class MappingProfiles : Profile
         CreateMap<Drug, CreateDrugCommand>().ReverseMap();
         CreateMap<Drug, CreatedDrugResponse>().ReverseMap();
 
-        CreateMap<Drug, GetListDrugListItemDTO>().ReverseMap();
-        CreateMap<Drug, GetByIdDrugResponse>().ReverseMap();
-
         CreateMap<Drug, UpdateDrugCommand>().ReverseMap();
         CreateMap<Drug, UpdateDrugResponse>().ReverseMap();
+
+        CreateMap<Drug, DeleteDrugCommand>().ReverseMap();
+        CreateMap<Drug, DeleteDrugResponse>().ReverseMap();
+
+        CreateMap<Drug, GetListDrugListItemDTO>().ReverseMap();
+        CreateMap<Drug, GetByIdDrugResponse>().ReverseMap();
 
         CreateMap<Paginate<Drug>, GetListResponse<GetListDrugListItemDTO>>().ReverseMap();
     }

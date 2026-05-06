@@ -49,8 +49,8 @@ public interface IAsyncRepository<TEntity, TEntityId> : ISqlQuery<TEntity>
         Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
-        int index = 0,
-        int size = 10,
+        int pageNumber = 0,
+        int pageSize = 10,
         bool withDeleted = false,
         bool enableTracking = false,
         CancellationToken cancellationToken = default);
