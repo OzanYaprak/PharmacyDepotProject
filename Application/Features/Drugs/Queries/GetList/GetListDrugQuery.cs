@@ -1,5 +1,5 @@
-using Application.Features.Drugs.Requests;
-using Application.Features.Drugs.Responses;
+using Application.Common.Requests;
+using Application.Common.Responses;
 using MediatR;
 
 namespace Application.Features.Drugs.Queries.GetList;

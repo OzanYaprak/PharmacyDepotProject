@@ -10,7 +10,6 @@
     <Folder Include="Features\Drugs\Constants\" />
     <Folder Include="Features\Drugs\Rules\" />
     <Folder Include="Features\Drugs\Profiles\" />
-    <Folder Include="Features\Suppliers\" />
   </ItemGroup>
 
   <ItemGroup>

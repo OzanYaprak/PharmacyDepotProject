@@ -9,6 +9,7 @@ public class BaseDbContext : DbContext
 {
     protected IConfiguration? Configuration { get; set; }
 
+    public DbSet<Customer> Customers { get; set; }
     public DbSet<Drug> Drugs { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }

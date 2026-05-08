@@ -1,10 +1,10 @@
-﻿using Application.Features.Drugs.Commands.Create;
+﻿using Application.Common.Requests;
+using Application.Common.Responses;
+using Application.Features.Drugs.Commands.Create;
 using Application.Features.Drugs.Commands.Delete;
 using Application.Features.Drugs.Commands.Update;
 using Application.Features.Drugs.Queries.GetById;
 using Application.Features.Drugs.Queries.GetList;
-using Application.Features.Drugs.Requests;
-using Application.Features.Drugs.Responses;
 using Microsoft.AspNetCore.Mvc;
 namespace WebAPI.Controllers;
 

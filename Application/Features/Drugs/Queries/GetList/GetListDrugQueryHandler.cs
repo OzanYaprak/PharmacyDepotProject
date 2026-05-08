@@ -1,4 +1,4 @@
-using Application.Features.Drugs.Responses;
+using Application.Common.Responses;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
