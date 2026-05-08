@@ -1,5 +1,5 @@
 using Domain.Entities.Base;
-using Domain.Enums;
+using Domain.Entities.Enums;
 
 namespace Domain.Entities;
 

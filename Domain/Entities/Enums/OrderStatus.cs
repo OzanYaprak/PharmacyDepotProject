@@ -1,4 +1,4 @@
-namespace Domain.Enums;
+namespace Domain.Entities.Enums;
 
 /// <summary>
 /// Satın alma siparişinin durumunu belirten enum.
