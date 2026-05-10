@@ -18,8 +18,9 @@ public static class PersistenceServiceRegistration
 {
     public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<BaseDbContext>(options => options.UseInMemoryDatabase("PharmacyDepotInMemoryDb"));
-        
+        //services.AddDbContext<BaseDbContext>(options => options.UseInMemoryDatabase("PharmacyDepotInMemoryDb")); // In-memory database for testing
+        services.AddDbContext<BaseDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))); // SQL Server database
+
         services.AddScoped<ICustomerRepository, CustomerRepository>();
         services.AddScoped<IDrugRepository, DrugRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();

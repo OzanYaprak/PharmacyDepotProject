@@ -2,6 +2,7 @@ using Application.Common.Responses;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Paging;
 using Persistence.Repositories.Sale;
 
@@ -21,6 +22,7 @@ public class GetListSaleQueryHandler : IRequestHandler<GetListSaleQuery, GetList
     public async Task<GetListResponse<GetListSaleListItemDto>> Handle(GetListSaleQuery request, CancellationToken cancellationToken)
     {
         Paginate<Sale> sales = await _saleRepository.GetListAsync(
+            include: s => s.Include(s => s.Customer),
             pageNumber: request.PageRequest?.PageNumber ?? 0,
             pageSize: request.PageRequest?.PageSize ?? 10,
             cancellationToken: cancellationToken);

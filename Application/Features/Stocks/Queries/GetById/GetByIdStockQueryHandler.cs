@@ -1,6 +1,7 @@
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Repositories.Stock;
 
 namespace Application.Features.Stocks.Queries.GetById;
@@ -19,6 +20,7 @@ public class GetByIdStockQueryHandler : IRequestHandler<GetByIdStockQuery, GetBy
     public async Task<GetByIdStockResponse> Handle(GetByIdStockQuery request, CancellationToken cancellationToken)
     {
         Stock? stock = await _stockRepository.GetAsync(
+            include: s => s.Include(x => x.Drug).Include(x => x.Warehouse),
             predicate: s => s.Id == request.Id,
             cancellationToken: cancellationToken);
 

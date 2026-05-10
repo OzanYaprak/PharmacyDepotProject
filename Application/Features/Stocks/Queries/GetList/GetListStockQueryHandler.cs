@@ -2,6 +2,7 @@ using Application.Common.Responses;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Paging;
 using Persistence.Repositories.Stock;
 
@@ -21,6 +22,7 @@ public class GetListStockQueryHandler : IRequestHandler<GetListStockQuery, GetLi
     public async Task<GetListResponse<GetListStockListItemDto>> Handle(GetListStockQuery request, CancellationToken cancellationToken)
     {
         Paginate<Stock> stocks = await _stockRepository.GetListAsync(
+            include: s => s.Include(s => s.Drug).Include(s => s.Warehouse),
             pageNumber: request.PageRequest?.PageNumber ?? 0,
             pageSize: request.PageRequest?.PageSize ?? 10,
             cancellationToken: cancellationToken);

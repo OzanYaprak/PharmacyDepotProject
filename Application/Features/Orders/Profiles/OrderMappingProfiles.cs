@@ -23,9 +23,14 @@ public class OrderMappingProfiles : Profile
         CreateMap<Order, DeleteOrderCommand>().ReverseMap();
         CreateMap<Order, DeletedOrderResponse>().ReverseMap();
 
-        CreateMap<Order, GetListOrderListItemDto>().ReverseMap();
+        CreateMap<Order, GetListOrderListItemDto>()
+            .ForMember(destinationMember: dest => dest.SupplierName, memberOptions: opt => opt.MapFrom(src => src.Supplier != null ? src.Supplier.Name : string.Empty))
+            .ReverseMap();
+
         CreateMap<Order, GetByIdOrderResponse>().ReverseMap();
 
-        CreateMap<Paginate<Order>, GetListResponse<GetListOrderListItemDto>>().ReverseMap();
+        CreateMap<Paginate<Order>, GetListResponse<GetListOrderListItemDto>>()
+            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.DataList ?? new List<Order>()))
+            .ForMember(dest => dest.DataList, opt => opt.Ignore());
     }
 }

@@ -2,6 +2,7 @@ using Application.Common.Responses;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Paging;
 using Persistence.Repositories.Order;
 
@@ -21,6 +22,7 @@ public class GetListOrderQueryHandler : IRequestHandler<GetListOrderQuery, GetLi
     public async Task<GetListResponse<GetListOrderListItemDto>> Handle(GetListOrderQuery request, CancellationToken cancellationToken)
     {
         Paginate<Order> orders = await _orderRepository.GetListAsync(
+            include: o => o.Include(s => s.Supplier).Include(x => x.OrderItems),
             pageNumber: request.PageRequest?.PageNumber ?? 0,
             pageSize: request.PageRequest?.PageSize ?? 10,
             cancellationToken: cancellationToken);

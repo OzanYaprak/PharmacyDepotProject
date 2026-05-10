@@ -23,9 +23,15 @@ public class StockMappingProfiles : Profile
         CreateMap<Stock, DeleteStockCommand>().ReverseMap();
         CreateMap<Stock, DeletedStockResponse>().ReverseMap();
 
-        CreateMap<Stock, GetListStockListItemDto>().ReverseMap();
+        CreateMap<Stock, GetListStockListItemDto>()
+            .ForMember(destinationMember: dest => dest.DrugName, memberOptions: opt => opt.MapFrom(src => src.Drug != null ? src.Drug.Name : string.Empty))
+            .ForMember(destinationMember: dest => dest.WarehouseName, memberOptions: opt => opt.MapFrom(src => src.Warehouse != null ? src.Warehouse.Name : string.Empty))
+            .ReverseMap();
+
         CreateMap<Stock, GetByIdStockResponse>().ReverseMap();
 
-        CreateMap<Paginate<Stock>, GetListResponse<GetListStockListItemDto>>().ReverseMap();
+        CreateMap<Paginate<Stock>, GetListResponse<GetListStockListItemDto>>()
+            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.DataList ?? new List<Stock>()))
+            .ForMember(dest => dest.DataList, opt => opt.Ignore()); ; ;
     }
 }

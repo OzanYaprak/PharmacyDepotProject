@@ -23,9 +23,14 @@ public class SaleMappingProfiles : Profile
         CreateMap<Sale, DeleteSaleCommand>().ReverseMap();
         CreateMap<Sale, DeletedSaleResponse>().ReverseMap();
 
-        CreateMap<Sale, GetListSaleListItemDto>().ReverseMap();
+        CreateMap<Sale, GetListSaleListItemDto>()
+            .ForMember(destinationMember: dest => dest.CustomerName, memberOptions: opt => opt.MapFrom(src => src.Customer != null ? src.Customer.Name : string.Empty))
+            .ReverseMap();
+
         CreateMap<Sale, GetByIdSaleResponse>().ReverseMap();
 
-        CreateMap<Paginate<Sale>, GetListResponse<GetListSaleListItemDto>>().ReverseMap();
+        CreateMap<Paginate<Sale>, GetListResponse<GetListSaleListItemDto>>()
+            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.DataList ?? new List<Sale>()))
+            .ForMember(dest => dest.DataList, opt => opt.Ignore()); ;
     }
 }
