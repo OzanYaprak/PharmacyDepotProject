@@ -39,8 +39,8 @@ public interface IAsyncRepository<TEntity, TEntityId> : ISqlQuery<TEntity>
     /// <param name="predicate">Filtreleme koşulu (opsiyonel).</param>
     /// <param name="orderBy">Sıralama ifadesi (opsiyonel).</param>
     /// <param name="include">İlişkili verileri yüklemek için include ifadesi (opsiyonel).</param>
-    /// <param name="index">Sayfa numarası (0 tabanlı).</param>
-    /// <param name="size">Sayfa başına kayıt sayısı.</param>
+    /// <param name="pageNumber">Sayfa numarası (0 tabanlı).</param>
+    /// <param name="pageSize">Sayfa başına kayıt sayısı.</param>
     /// <param name="withDeleted">Soft-delete edilmiş kayıtların dahil edilip edilmeyeceği.</param>
     /// <param name="enableTracking">EF Core change tracking'in devre dışı bırakılıp bırakılmayacağı.</param>
     /// <param name="cancellationToken">İptal belirteci.</param>
@@ -61,8 +61,8 @@ public interface IAsyncRepository<TEntity, TEntityId> : ISqlQuery<TEntity>
     /// <param name="dynamic">Dinamik filtre ve sıralama parametrelerini içeren nesne.</param>
     /// <param name="predicate">Ek filtreleme koşulu (opsiyonel).</param>
     /// <param name="include">İlişkili verileri yüklemek için include ifadesi (opsiyonel).</param>
-    /// <param name="index">Sayfa numarası (0 tabanlı).</param>
-    /// <param name="size">Sayfa başına kayıt sayısı.</param>
+    /// <param name="pageNumber">Sayfa numarası (0 tabanlı).</param>
+    /// <param name="pageSize">Sayfa başına kayıt sayısı.</param>
     /// <param name="withDeleted">Soft-delete edilmiş kayıtların dahil edilip edilmeyeceği.</param>
     /// <param name="enableTracking">EF Core change tracking'in devre dışı bırakılıp bırakılmayacağı.</param>
     /// <param name="cancellationToken">İptal belirteci.</param>
@@ -71,8 +71,8 @@ public interface IAsyncRepository<TEntity, TEntityId> : ISqlQuery<TEntity>
         DynamicQuery dynamic,
         Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
-        int index = 0,
-        int size = 10,
+        int pageNumber = 0,
+        int pageSize = 10,
         bool withDeleted = false,
         bool enableTracking = false,
         CancellationToken cancellationToken = default);

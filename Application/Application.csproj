@@ -11,7 +11,6 @@
     <Folder Include="Features\Customers\Rules\" />
     <Folder Include="Features\Drugs\Constants\" />
     <Folder Include="Features\Drugs\Rules\" />
-    <Folder Include="Features\Drugs\Profiles\" />
     <Folder Include="Features\Orders\Constants\" />
     <Folder Include="Features\Orders\Rules\" />
     <Folder Include="Features\Sales\Constants\" />

@@ -1,6 +1,6 @@
-namespace Application.Features.Drugs.Queries.GetList;
+namespace Application.Features.Drugs.Queries.GetListByDynamic;
 
-public class GetListDrugListItemDto
+public class GetListByDynamicDrugListItemDto
 {
     public Guid Id { get; set; }
     public string? Name { get; set; }

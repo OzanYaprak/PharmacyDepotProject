@@ -4,15 +4,16 @@ using Application.Features.Drugs.Commands.Delete;
 using Application.Features.Drugs.Commands.Update;
 using Application.Features.Drugs.Queries.GetById;
 using Application.Features.Drugs.Queries.GetList;
+using Application.Features.Drugs.Queries.GetListByDynamic;
 using AutoMapper;
 using Domain.Entities;
 using Persistence.Paging;
 
 namespace Application.Features.Drugs.Profiles;
 
-public class MappingProfiles : Profile
+public class DrugMappingProfiles : Profile
 {
-    public MappingProfiles()
+    public DrugMappingProfiles()
     {
         CreateMap<Drug, CreateDrugCommand>().ReverseMap();
         CreateMap<Drug, CreatedDrugResponse>().ReverseMap();
@@ -23,9 +24,10 @@ public class MappingProfiles : Profile
         CreateMap<Drug, DeleteDrugCommand>().ReverseMap();
         CreateMap<Drug, DeleteDrugResponse>().ReverseMap();
 
-        CreateMap<Drug, GetListDrugListItemDTO>().ReverseMap();
+        CreateMap<Drug, GetListDrugListItemDto>().ReverseMap();
         CreateMap<Drug, GetByIdDrugResponse>().ReverseMap();
 
-        CreateMap<Paginate<Drug>, GetListResponse<GetListDrugListItemDTO>>().ReverseMap();
+        CreateMap<Paginate<Drug>, GetListResponse<GetListDrugListItemDto>>().ReverseMap();
+        CreateMap<Paginate<Drug>, GetListResponse<GetListByDynamicDrugListItemDto>>().ReverseMap();
     }
 }

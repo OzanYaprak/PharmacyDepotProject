@@ -7,7 +7,7 @@ using Persistence.Repositories.Drug;
 
 namespace Application.Features.Drugs.Queries.GetList;
 
-public class GetListDrugQueryHandler : IRequestHandler<GetListDrugQuery, GetListResponse<GetListDrugListItemDTO>>
+public class GetListDrugQueryHandler : IRequestHandler<GetListDrugQuery, GetListResponse<GetListDrugListItemDto>>
 {
     #region Constructor Injection
 
@@ -21,7 +21,7 @@ public class GetListDrugQueryHandler : IRequestHandler<GetListDrugQuery, GetList
 
     #endregion
 
-    public async Task<GetListResponse<GetListDrugListItemDTO>> Handle(GetListDrugQuery request, CancellationToken cancellationToken)
+    public async Task<GetListResponse<GetListDrugListItemDto>> Handle(GetListDrugQuery request, CancellationToken cancellationToken)
     {
         Paginate<Drug> drugs = await _drugRepository
             .GetListAsync(
@@ -30,7 +30,7 @@ public class GetListDrugQueryHandler : IRequestHandler<GetListDrugQuery, GetList
             withDeleted: true,
             cancellationToken: cancellationToken);
 
-        GetListResponse<GetListDrugListItemDTO> response = _mapper.Map<GetListResponse<GetListDrugListItemDTO>>(drugs);
+        GetListResponse<GetListDrugListItemDto> response = _mapper.Map<GetListResponse<GetListDrugListItemDto>>(drugs);
         return response;
     }
 }
