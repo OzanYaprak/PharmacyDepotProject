@@ -7,8 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Customers\Constants\" />
-    <Folder Include="Features\Customers\Rules\" />
     <Folder Include="Features\Drugs\Constants\" />
     <Folder Include="Features\Drugs\Rules\" />
     <Folder Include="Features\Orders\Constants\" />
@@ -29,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CrossCuttingConcerns\CrossCuttingConcerns.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
     <ProjectReference Include="..\Persistence\Persistence.csproj" />
   </ItemGroup>

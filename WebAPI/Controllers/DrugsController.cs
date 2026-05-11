@@ -7,6 +7,7 @@ using Application.Features.Drugs.Queries.GetById;
 using Application.Features.Drugs.Queries.GetList;
 using Application.Features.Drugs.Queries.GetListByDynamic;
 using Microsoft.AspNetCore.Mvc;
+using Persistence.Dynamic;
 namespace WebAPI.Controllers;
 
 [Route("api/[controller]")]
@@ -28,10 +29,10 @@ public class DrugsController : BaseController
         return Ok(response);
     }
 
-    [HttpGet("GetDrugsByDynamic")]
-    public async Task<IActionResult> GetDrugsByDynamic([FromQuery] PageRequest pageRequest)
+    [HttpPost("GetDrugsByDynamic")]
+    public async Task<IActionResult> GetDrugsByDynamic([FromQuery] PageRequest pageRequest, [FromBody] DynamicQuery? dynamicQuery = null)
     {
-        GetListByDynamicDrugQuery query = new GetListByDynamicDrugQuery { PageRequest = pageRequest };
+        GetListByDynamicDrugQuery query = new GetListByDynamicDrugQuery { PageRequest = pageRequest, DynamicQuery = dynamicQuery };
         GetListResponse<GetListByDynamicDrugListItemDto> response = await Mediator.Send(query);
         return Ok(response);
     }

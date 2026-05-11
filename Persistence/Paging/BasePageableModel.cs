@@ -9,7 +9,7 @@ public abstract class BasePageableModel
     public int DataCount { get; set; }
     public int DeletedDataCount { get; set; }
     public int TotalPages { get; set; }
-    [JsonIgnore]
+    //[JsonIgnore]
     public IList<object>? DataList { get; set; }
     public bool HasPreviousPage { get; set; }
     public bool HasContinuousPage { get; set; }

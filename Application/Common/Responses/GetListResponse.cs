@@ -8,11 +8,11 @@ namespace Application.Common.Responses;
 /// <typeparam name="T">Liste elemanının tipi.</typeparam>
 public class GetListResponse<T> : BasePageableModel
 {
-    private IList<T> _items = new List<T>();
+    private IList<T> _items;
 
     public IList<T> Items
     {
-        get => _items;
+        get => _items ??= new List<T>();
         set => _items = value;
     }
 }
