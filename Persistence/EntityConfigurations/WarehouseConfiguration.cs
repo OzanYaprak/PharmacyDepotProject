@@ -15,6 +15,25 @@ public class WarehouseConfiguration : IEntityTypeConfiguration<Warehouse>
     /// <param name="builder">Entity özelliklerini yapılandırmak için kullanılan builder nesnesi.</param>
     public void Configure(EntityTypeBuilder<Warehouse> builder)
     {
+        builder.HasData(
+           new Warehouse
+           {
+               Id = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-000000000001"),
+               Name = "Ana Depo",
+               Location = "İkitelli OSB, İstanbul",
+               Capacity = 50000,
+               CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+           },
+           new Warehouse
+           {
+               Id = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-000000000002"),
+               Name = "Soğuk Zincir Deposu",
+               Location = "Esenyurt, İstanbul",
+               Capacity = 10000,
+               CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+           }
+        );
+
         // "Warehouses" tablosu olarak eşlenir; birincil anahtar Id sütunudur.
         builder.ToTable("Warehouses").HasKey(x => x.Id);
 

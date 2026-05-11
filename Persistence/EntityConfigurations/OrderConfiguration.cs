@@ -15,6 +15,26 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
     /// <param name="builder">Entity özelliklerini yapılandırmak için kullanılan builder nesnesi.</param>
     public void Configure(EntityTypeBuilder<Order> builder)
     {
+
+        builder.HasData(
+            new Order
+            {
+                Id = Guid.Parse("ffff0001-0000-0000-0000-000000000001"),
+                SupplierId = Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-000000000001"),
+                OrderDate = new DateTime(2025, 1, 5, 0, 0, 0, DateTimeKind.Utc),
+                Status = Domain.Entities.Enums.OrderStatus.Delivered,
+                CreatedDate = new DateTime(2025, 1, 5, 0, 0, 0, DateTimeKind.Utc)
+            },
+            new Order
+            {
+                Id = Guid.Parse("ffff0001-0000-0000-0000-000000000002"),
+                SupplierId = Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-000000000002"),
+                OrderDate = new DateTime(2025, 2, 10, 0, 0, 0, DateTimeKind.Utc),
+                Status = Domain.Entities.Enums.OrderStatus.Confirmed,
+                CreatedDate = new DateTime(2025, 2, 10, 0, 0, 0, DateTimeKind.Utc)
+            }
+        );
+
         // "Orders" tablosu olarak eşlenir; birincil anahtar Id sütunudur.
         builder.ToTable("Orders").HasKey(x => x.Id);
 

@@ -15,6 +15,39 @@ public class DrugConfiguration : IEntityTypeConfiguration<Drug>
     /// <param name="builder">Entity özelliklerini yapılandırmak için kullanılan builder nesnesi.</param>
     public void Configure(EntityTypeBuilder<Drug> builder)
     {
+        builder.HasData(
+            new Drug
+            {
+                Id = Guid.Parse("dddddddd-dddd-dddd-dddd-000000000001"),
+                Name = "Aspirin 500mg",
+                GTIN = "08690001000001",
+                SN = "SN-ASP-001",
+                BN = "BN-ASP-2025",
+                ExpireDate = new DateTime(2028, 1, 1),
+                CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+            },
+            new Drug
+            {
+                Id = Guid.Parse("dddddddd-dddd-dddd-dddd-000000000002"),
+                Name = "Amoksisilin 250mg",
+                GTIN = "08690002000002",
+                SN = "SN-AMX-001",
+                BN = "BN-AMX-2025",
+                ExpireDate = new DateTime(2027, 6, 1),
+                CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+            },
+            new Drug
+            {
+                Id = Guid.Parse("dddddddd-dddd-dddd-dddd-000000000003"),
+                Name = "Parol 500mg",
+                GTIN = "08690003000003",
+                SN = "SN-PAR-001",
+                BN = "BN-PAR-2025",
+                ExpireDate = new DateTime(2027, 12, 1),
+                CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+            }
+        );
+
         // "Drugs" tablosu olarak eşlenir; birincil anahtar Id sütunudur.
         builder.ToTable("Drugs").HasKey(x => x.Id);
 

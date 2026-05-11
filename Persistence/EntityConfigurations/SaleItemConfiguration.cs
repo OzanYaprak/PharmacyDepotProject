@@ -15,6 +15,27 @@ public class SaleItemConfiguration : IEntityTypeConfiguration<SaleItem>
     /// <param name="builder">Entity özelliklerini yapılandırmak için kullanılan builder nesnesi.</param>
     public void Configure(EntityTypeBuilder<SaleItem> builder)
     {
+        builder.HasData(
+            new SaleItem
+            {
+                Id = Guid.Parse("00000033-0000-0000-0000-000000000001"),
+                SaleId = Guid.Parse("00000022-0000-0000-0000-000000000001"),
+                DrugId = Guid.Parse("dddddddd-dddd-dddd-dddd-000000000001"),
+                Quantity = 100,
+                UnitPrice = 12.50m,
+                CreatedDate = new DateTime(2025, 3, 1, 0, 0, 0, DateTimeKind.Utc)
+            },
+            new SaleItem
+            {
+                Id = Guid.Parse("00000033-0000-0000-0000-000000000002"),
+                SaleId = Guid.Parse("00000022-0000-0000-0000-000000000002"),
+                DrugId = Guid.Parse("dddddddd-dddd-dddd-dddd-000000000003"),
+                Quantity = 100,
+                UnitPrice = 8.75m,
+                CreatedDate = new DateTime(2025, 3, 5, 0, 0, 0, DateTimeKind.Utc)
+            }
+        );
+
         // "SaleItems" tablosu olarak eşlenir; birincil anahtar Id sütunudur.
         builder.ToTable("SaleItems").HasKey(x => x.Id);
 

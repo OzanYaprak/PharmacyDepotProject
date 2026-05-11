@@ -16,6 +16,25 @@ public class SaleConfiguration : IEntityTypeConfiguration<Sale>
 
     public void Configure(EntityTypeBuilder<Sale> builder)
     {
+        builder.HasData(
+            new Sale
+            {
+                Id = Guid.Parse("00000022-0000-0000-0000-000000000001"),
+                CustomerId = Guid.Parse("cccccccc-cccc-cccc-cccc-000000000001"),
+                SaleDate = new DateTime(2025, 3, 1, 0, 0, 0, DateTimeKind.Utc),
+                TotalAmount = 1250.00m,
+                CreatedDate = new DateTime(2025, 3, 1, 0, 0, 0, DateTimeKind.Utc)
+            },
+            new Sale
+            {
+                Id = Guid.Parse("00000022-0000-0000-0000-000000000002"),
+                CustomerId = Guid.Parse("cccccccc-cccc-cccc-cccc-000000000002"),
+                SaleDate = new DateTime(2025, 3, 5, 0, 0, 0, DateTimeKind.Utc),
+                TotalAmount = 875.00m,
+                CreatedDate = new DateTime(2025, 3, 5, 0, 0, 0, DateTimeKind.Utc)
+            }
+        );
+
         // "Sales" tablosu olarak eşlenir; birincil anahtar Id sütunudur.
         builder.ToTable("Sales").HasKey(x => x.Id);
 

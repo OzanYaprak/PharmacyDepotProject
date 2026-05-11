@@ -15,6 +15,29 @@ public class SupplierConfiguration : IEntityTypeConfiguration<Supplier>
     /// <param name="builder">Entity özelliklerini yapılandırmak için kullanılan builder nesnesi.</param>
     public void Configure(EntityTypeBuilder<Supplier> builder)
     {
+        builder.HasData(
+            new Supplier
+            {
+                Id = Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-000000000001"),
+                Name = "Abdi İbrahim İlaç",
+                ContactPerson = "Ahmet Yılmaz",
+                Phone = "0212-333-3333",
+                Email = "tedarik@abdiibrahim.com",
+                Address = "Boğaziçi Mah. Sanayi Cad. No:1, İstanbul",
+                CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+            },
+            new Supplier
+            {
+                Id = Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-000000000002"),
+                Name = "Eczacıbaşı İlaç",
+                ContactPerson = "Mehmet Demir",
+                Phone = "0216-444-4444",
+                Email = "tedarik@eczacibasi.com",
+                Address = "Kartal Mah. İlaç Sokak No:7, İstanbul",
+                CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+            }
+        );
+
         // "Suppliers" tablosu olarak eşlenir; birincil anahtar Id sütunudur.
         builder.ToTable("Suppliers").HasKey(x => x.Id);
 

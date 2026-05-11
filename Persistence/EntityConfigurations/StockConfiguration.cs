@@ -15,6 +15,37 @@ public class StockConfiguration : IEntityTypeConfiguration<Stock>
     /// <param name="builder">Entity özelliklerini yapılandırmak için kullanılan builder nesnesi.</param>
     public void Configure(EntityTypeBuilder<Stock> builder)
     {
+
+        builder.HasData(
+            new Stock
+            {
+                Id = Guid.Parse("eeeeeeee-eeee-eeee-eeee-000000000001"),
+                DrugId = Guid.Parse("dddddddd-dddd-dddd-dddd-000000000001"),
+                WarehouseId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-000000000001"),
+                Quantity = 5000,
+                UnitPrice = 12.50m,
+                CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+            },
+            new Stock
+            {
+                Id = Guid.Parse("eeeeeeee-eeee-eeee-eeee-000000000002"),
+                DrugId = Guid.Parse("dddddddd-dddd-dddd-dddd-000000000002"),
+                WarehouseId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-000000000001"),
+                Quantity = 3000,
+                UnitPrice = 45.00m,
+                CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+            },
+            new Stock
+            {
+                Id = Guid.Parse("eeeeeeee-eeee-eeee-eeee-000000000003"),
+                DrugId = Guid.Parse("dddddddd-dddd-dddd-dddd-000000000003"),
+                WarehouseId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-000000000002"),
+                Quantity = 2000,
+                UnitPrice = 8.75m,
+                CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+            }
+        );
+
         // "Stocks" tablosu olarak eşlenir; birincil anahtar Id sütunudur.
         builder.ToTable("Stocks").HasKey(x => x.Id);
 

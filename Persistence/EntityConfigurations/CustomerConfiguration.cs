@@ -15,6 +15,29 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
     /// <param name="builder">Entity özelliklerini yapılandırmak için kullanılan builder nesnesi.</param>
     public void Configure(EntityTypeBuilder<Customer> builder)
     {
+        builder.HasData(
+            new Customer
+            {
+                Id = Guid.Parse("cccccccc-cccc-cccc-cccc-000000000001"),
+                Name = "Eczane Güven",
+                LicenseNumber = "ECZ-100001",
+                Phone = "0212-111-1111",
+                Email = "guven@eczane.com",
+                Address = "Bağcılar Mah. 1. Sokak No:5, İstanbul",
+                CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+            },
+            new Customer
+            {
+                Id = Guid.Parse("cccccccc-cccc-cccc-cccc-000000000002"),
+                Name = "Eczane Sağlık",
+                LicenseNumber = "ECZ-100002",
+                Phone = "0312-222-2222",
+                Email = "saglik@eczane.com",
+                Address = "Çankaya Mah. 2. Cadde No:10, Ankara",
+                CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+            }
+        );
+
         // "Customers" tablosu olarak eşlenir; birincil anahtar Id sütunudur.
         builder.ToTable("Customers").HasKey(x => x.Id);
 
