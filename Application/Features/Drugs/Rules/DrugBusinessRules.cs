@@ -74,4 +74,17 @@ public class DrugBusinessRules : BaseBusinessRules
 
         return Task.CompletedTask;
     }
+
+    /// <summary>
+    /// Verilen ID'ye sahip ilacın veritabanında mevcut olduğunu doğrular.
+    /// Yoksa NotFoundException fırlatır → HTTP 404 Not Found döndürülür.
+    /// GetById, Update, Delete gibi operasyonlardan önce çağrılmalıdır.
+    /// </summary>
+    public async Task DrugMustExistWhenRequested(Guid id)
+    {
+        Drug? drug = await _drugRepository.GetAsync(predicate: d => d.Id == id);
+
+        if (drug is null)
+            throw new NotFoundException(nameof(Drug), id);
+    }
 }

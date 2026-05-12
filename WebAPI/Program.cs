@@ -1,4 +1,5 @@
 using Application;
+using CrossCuttingConcerns.Exceptions.Extensions;
 using Microsoft.OpenApi;
 using Persistence;
 
@@ -24,6 +25,21 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Global hata yönetimi yalnızca Production ortamında aktif edilir.
+// Development ortamında varsayılan ASP.NET Core hata sayfası kullanılır.
+if (app.Environment.IsProduction())
+{
+    // ─── GLOBAL HATA YÖNETİMİ MİDDLEWARE ────────────────────────────────────────
+    // ÖNEMLI: Bu middleware mümkün olduğunca ERKEN pipeline'a eklenmelidir.
+    // Böylece sonraki tüm middleware/controller'lardan fırlayan exception'lar yakalanır.
+    // CrossCuttingConcerns katmanında tanımlanan ExceptionMiddleware devreye girer:
+    //   - BusinessException → HTTP 400 + BusinessProblemDetails JSON
+    //   - NotFoundException → HTTP 404 + NotFoundProblemDetails JSON
+    //   - Exception (diğer) → HTTP 500 + InternalServerErrorProblemDetails JSON
+    app.UseCustomExceptionMiddleware();
+}
+
 
 app.UseHttpsRedirection();
 
