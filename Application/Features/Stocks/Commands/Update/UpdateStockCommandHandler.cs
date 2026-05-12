@@ -1,3 +1,4 @@
+using Application.Features.Stocks.Rules;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
@@ -9,15 +10,23 @@ public class UpdateStockCommandHandler : IRequestHandler<UpdateStockCommand, Upd
 {
     private readonly IStockRepository _stockRepository;
     private readonly IMapper _mapper;
+    private readonly StockBusinessRules _stockBusinessRules;
 
-    public UpdateStockCommandHandler(IStockRepository stockRepository, IMapper mapper)
+    public UpdateStockCommandHandler(IStockRepository stockRepository, IMapper mapper, StockBusinessRules stockBusinessRules)
     {
         _stockRepository = stockRepository;
         _mapper = mapper;
+        _stockBusinessRules = stockBusinessRules;
     }
 
     public async Task<UpdatedStockResponse> Handle(UpdateStockCommand request, CancellationToken cancellationToken)
     {
+        if (request.Quantity.HasValue)
+            await _stockBusinessRules.QuantityMustBeNonNegative(request.Quantity.Value);
+
+        if (request.UnitPrice.HasValue)
+            await _stockBusinessRules.UnitPriceMustBePositive(request.UnitPrice.Value);
+
         Stock? stock = await _stockRepository.GetAsync(
             predicate: s => s.Id == request.Id,
             cancellationToken: cancellationToken);

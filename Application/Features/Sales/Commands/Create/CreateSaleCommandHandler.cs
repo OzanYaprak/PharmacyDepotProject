@@ -1,3 +1,4 @@
+using Application.Features.Sales.Rules;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
@@ -9,15 +10,20 @@ public class CreateSaleCommandHandler : IRequestHandler<CreateSaleCommand, Creat
 {
     private readonly ISaleRepository _saleRepository;
     private readonly IMapper _mapper;
+    private readonly SaleBusinessRules _saleBusinessRules;
 
-    public CreateSaleCommandHandler(ISaleRepository saleRepository, IMapper mapper)
+    public CreateSaleCommandHandler(ISaleRepository saleRepository, IMapper mapper, SaleBusinessRules saleBusinessRules)
     {
         _saleRepository = saleRepository;
         _mapper = mapper;
+        _saleBusinessRules = saleBusinessRules;
     }
 
     public async Task<CreatedSaleResponse> Handle(CreateSaleCommand request, CancellationToken cancellationToken)
     {
+        await _saleBusinessRules.SaleDateCannotBeInTheFuture(request.SaleDate);
+        await _saleBusinessRules.TotalAmountMustBePositive(request.TotalAmount);
+
         Sale sale = _mapper.Map<Sale>(request);
         sale.Id = Guid.NewGuid();
 

@@ -21,7 +21,8 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
 
     public async Task<CreatedCustomerResponse> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
     {
-        await _customerBusinessRules.LicenseNumberCannotBeDuplicatedWhenInserted(request.LicenseNumber);
+        await _customerBusinessRules.LicenseNumberCannotBeDuplicatedWhenInserted(licenseNumber: request.LicenseNumber);
+        await _customerBusinessRules.PhoneNumberCannotBeDuplicatedWhenInserted(phoneNumber: request.Phone);
 
         Customer customer = _mapper.Map<Customer>(request);
         customer.Id = Guid.NewGuid();

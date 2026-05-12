@@ -1,3 +1,4 @@
+using Application.Features.Suppliers.Rules;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
@@ -9,15 +10,20 @@ public class CreateSupplierCommandHandler : IRequestHandler<CreateSupplierComman
 {
     private readonly ISupplierRepository _supplierRepository;
     private readonly IMapper _mapper;
+    private readonly SupplierBusinessRules _supplierBusinessRules;
 
-    public CreateSupplierCommandHandler(ISupplierRepository supplierRepository, IMapper mapper)
+    public CreateSupplierCommandHandler(ISupplierRepository supplierRepository, IMapper mapper, SupplierBusinessRules supplierBusinessRules)
     {
         _supplierRepository = supplierRepository;
         _mapper = mapper;
+        _supplierBusinessRules = supplierBusinessRules;
     }
 
     public async Task<CreatedSupplierResponse> Handle(CreateSupplierCommand request, CancellationToken cancellationToken)
     {
+        await _supplierBusinessRules.PhoneNumberCannotBeDuplicatedWhenInserted(request.Phone);
+        await _supplierBusinessRules.EmailCannotBeDuplicatedWhenInserted(request.Email);
+
         Supplier supplier = _mapper.Map<Supplier>(request);
         supplier.Id = Guid.NewGuid();
 

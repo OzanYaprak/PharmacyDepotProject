@@ -1,3 +1,4 @@
+using Application.Features.Suppliers.Rules;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
@@ -9,15 +10,23 @@ public class UpdateSupplierCommandHandler : IRequestHandler<UpdateSupplierComman
 {
     private readonly ISupplierRepository _supplierRepository;
     private readonly IMapper _mapper;
+    private readonly SupplierBusinessRules _supplierBusinessRules;
 
-    public UpdateSupplierCommandHandler(ISupplierRepository supplierRepository, IMapper mapper)
+    public UpdateSupplierCommandHandler(ISupplierRepository supplierRepository, IMapper mapper, SupplierBusinessRules supplierBusinessRules)
     {
         _supplierRepository = supplierRepository;
         _mapper = mapper;
+        _supplierBusinessRules = supplierBusinessRules;
     }
 
     public async Task<UpdatedSupplierResponse> Handle(UpdateSupplierCommand request, CancellationToken cancellationToken)
     {
+        if (request.Phone is not null)
+            await _supplierBusinessRules.PhoneNumberCannotBeDuplicatedWhenUpdated(request.Id, request.Phone);
+
+        if (request.Email is not null)
+            await _supplierBusinessRules.EmailCannotBeDuplicatedWhenUpdated(request.Id, request.Email);
+
         Supplier? supplier = await _supplierRepository.GetAsync(
             predicate: s => s.Id == request.Id,
             cancellationToken: cancellationToken);

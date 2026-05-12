@@ -1,3 +1,4 @@
+using Application.Features.Customers.Rules;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
@@ -9,15 +10,20 @@ public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerComman
 {
     private readonly ICustomerRepository _customerRepository;
     private readonly IMapper _mapper;
+    private readonly CustomerBusinessRules _customerBusinessRules;
 
-    public UpdateCustomerCommandHandler(ICustomerRepository customerRepository, IMapper mapper)
+    public UpdateCustomerCommandHandler(ICustomerRepository customerRepository, IMapper mapper, CustomerBusinessRules customerBusinessRules)
     {
         _customerRepository = customerRepository;
         _mapper = mapper;
+        _customerBusinessRules = customerBusinessRules;
     }
 
     public async Task<UpdatedCustomerResponse> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
     {
+        await _customerBusinessRules.LicenseNumberCannotBeDuplicatedWhenUpdated(request.Id, request.LicenseNumber!);
+        await _customerBusinessRules.PhoneNumberCannotBeDuplicatedWhenUpdated(request.Id, request.Phone!);
+
         Customer? customer = await _customerRepository.GetAsync(
             predicate: c => c.Id == request.Id,
             cancellationToken: cancellationToken);

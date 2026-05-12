@@ -1,3 +1,4 @@
+using Application.Features.Warehouses.Rules;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
@@ -9,15 +10,23 @@ public class UpdateWarehouseCommandHandler : IRequestHandler<UpdateWarehouseComm
 {
     private readonly IWarehouseRepository _warehouseRepository;
     private readonly IMapper _mapper;
+    private readonly WarehouseBusinessRules _warehouseBusinessRules;
 
-    public UpdateWarehouseCommandHandler(IWarehouseRepository warehouseRepository, IMapper mapper)
+    public UpdateWarehouseCommandHandler(IWarehouseRepository warehouseRepository, IMapper mapper, WarehouseBusinessRules warehouseBusinessRules)
     {
         _warehouseRepository = warehouseRepository;
         _mapper = mapper;
+        _warehouseBusinessRules = warehouseBusinessRules;
     }
 
     public async Task<UpdatedWarehouseResponse> Handle(UpdateWarehouseCommand request, CancellationToken cancellationToken)
     {
+        if (request.Name is not null)
+            await _warehouseBusinessRules.NameCannotBeDuplicatedWhenUpdated(request.Id, request.Name);
+
+        if (request.Capacity.HasValue)
+            await _warehouseBusinessRules.CapacityMustBePositive(request.Capacity.Value);
+
         Warehouse? warehouse = await _warehouseRepository.GetAsync(
             predicate: w => w.Id == request.Id,
             cancellationToken: cancellationToken);

@@ -1,3 +1,4 @@
+using Application.Features.Orders.Rules;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
@@ -9,15 +10,19 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Cre
 {
     private readonly IOrderRepository _orderRepository;
     private readonly IMapper _mapper;
+    private readonly OrderBusinessRules _orderBusinessRules;
 
-    public CreateOrderCommandHandler(IOrderRepository orderRepository, IMapper mapper)
+    public CreateOrderCommandHandler(IOrderRepository orderRepository, IMapper mapper, OrderBusinessRules orderBusinessRules)
     {
         _orderRepository = orderRepository;
         _mapper = mapper;
+        _orderBusinessRules = orderBusinessRules;
     }
 
     public async Task<CreatedOrderResponse> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
+        await _orderBusinessRules.OrderDateCannotBeInTheFuture(request.OrderDate);
+
         Order order = _mapper.Map<Order>(request);
         order.Id = Guid.NewGuid();
 

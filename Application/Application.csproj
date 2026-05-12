@@ -7,21 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Drugs\Constants\" />
-    <Folder Include="Features\Drugs\Rules\" />
-    <Folder Include="Features\Orders\Constants\" />
-    <Folder Include="Features\Orders\Rules\" />
-    <Folder Include="Features\Sales\Constants\" />
-    <Folder Include="Features\Sales\Rules\" />
-    <Folder Include="Features\Stocks\Constants\" />
-    <Folder Include="Features\Stocks\Rules\" />
-    <Folder Include="Features\Suppliers\Constants\" />
-    <Folder Include="Features\Suppliers\Rules\" />
-    <Folder Include="Features\Warehouses\Constants\" />
-    <Folder Include="Features\Warehouses\Rules\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="16.1.1" />
     <PackageReference Include="MediatR" Version="14.1.0" />
   </ItemGroup>
