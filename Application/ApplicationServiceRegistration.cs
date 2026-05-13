@@ -1,4 +1,6 @@
+using Application.Pipelines.Validation;
 using Application.Rules;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -20,9 +22,16 @@ public static class ApplicationServiceRegistration
     /// </summary>
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
+        // FluentValidation: Tüm AbstractValidator<T> sınıflarını otomatik tarar ve kaydeder.
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
         // MediatR: CQRS deseninde Command/Query nesnelerini ilgili Handler'ına yönlendirir.
         // Assembly.GetExecutingAssembly(): Application.dll içindeki tüm IRequestHandler<,> sınıflarını otomatik bulur.
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+        services.AddMediatR(cfg =>
+        {
+            cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+            cfg.AddOpenBehavior(typeof(RequestValidationBehavior<,>)); // MediatR pipeline'ına doğrulama davranışı ekler.
+        });
 
         // AutoMapper: Entity ↔ DTO ↔ Command/Response dönüşümlerini profil sınıfları üzerinden yönetir.
         // AddMaps: tüm MappingProfile türevlerini aynı assembly'de otomatik tarar.
