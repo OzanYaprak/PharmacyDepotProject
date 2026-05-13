@@ -2,6 +2,7 @@
 using CrossCuttingConcerns.Exceptions.HttpProblemDetails;
 using CrossCuttingConcerns.Exceptions.Types;
 using Microsoft.AspNetCore.Http;
+using System.Text.Json;
 
 namespace CrossCuttingConcerns.Exceptions.Handlers;
 
@@ -36,7 +37,7 @@ public class HttpExceptionHandler : ExceptionHandler
     /// İş kuralı ihlali (BusinessException) için HTTP 400 yanıtı oluşturur.
     /// Kullanıcıya anlamlı hata mesajı döndürülür.
     /// </summary>
-    protected override Task HandleException(BusinessException businessException)
+    protected override Task BusinessHandleException(BusinessException businessException)
     {
         // HTTP durum kodu 400 olarak ayarlanır: istemci hatası (kullanıcı hatalı veri gönderdi)
         Response.StatusCode = StatusCodes.Status400BadRequest;
@@ -48,7 +49,7 @@ public class HttpExceptionHandler : ExceptionHandler
     /// <summary>
     /// Kayıt bulunamadı (NotFoundException) için HTTP 404 yanıtı oluşturur.
     /// </summary>
-    protected override Task HandleException(NotFoundException notFoundException)
+    protected override Task NotFoundHandleException(NotFoundException notFoundException)
     {
         // HTTP durum kodu 404 olarak ayarlanır: istenen kaynak sunucuda yok
         Response.StatusCode = StatusCodes.Status404NotFound;

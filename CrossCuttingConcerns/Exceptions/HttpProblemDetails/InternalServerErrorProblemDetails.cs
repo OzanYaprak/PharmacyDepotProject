@@ -29,7 +29,7 @@ public class InternalServerErrorProblemDetails : ProblemDetails
         // Hatanın kısa başlığı
         Title = "Internal Server Error";
         // Exception'ın mesajı buraya yazılır — dikkat: prod ortamında hassas bilgi içerebilir
-        Detail = detail;
+        Detail = "Internal Server Error";
         // HTTP durum kodu: 500 (sunucu hatası)
         Status = StatusCodes.Status500InternalServerError;
         // Hata tipi için URI referansı

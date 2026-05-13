@@ -21,8 +21,8 @@ public class ExceptionMiddleware
     // Middleware zincirinde sıradaki halka çağrılmazsa istek ilerlemez.
     private readonly RequestDelegate _next;
 
-    // _exceptionHandler: exception'ı HTTP yanıtına dönüştürmekten sorumlu nesne.
-    private readonly HttpExceptionHandler _exceptionHandler;
+    // _httpExceptionHandler: exception'ı HTTP yanıtına dönüştürmekten sorumlu nesne.
+    private readonly HttpExceptionHandler _httpExceptionHandler;
 
     /// <summary>
     /// ASP.NET Core DI container tarafından otomatik çağrılır.
@@ -32,7 +32,7 @@ public class ExceptionMiddleware
     {
         _next = next;
         // HttpExceptionHandler burada bir kez oluşturulur; her istek için Response property'si güncellenir.
-        _exceptionHandler = new HttpExceptionHandler();
+        _httpExceptionHandler = new HttpExceptionHandler();
     }
 
     #endregion
@@ -65,8 +65,8 @@ public class ExceptionMiddleware
         // Yanıtın içerik türü JSON olarak ayarlanır (RFC 7807 gereği)
         httpResponse.ContentType = "application/json";
         // Handler'a hangi response'a yazacağını söyler
-        _exceptionHandler.Response = httpResponse;
+        _httpExceptionHandler.Response = httpResponse;
         // Exception türüne göre (Business/Generic) doğru handler metodunu çağırır
-        return _exceptionHandler.HandleExceptionAsync(exception);
+        return _httpExceptionHandler.HandleExceptionAsync(exception);
     }
 }

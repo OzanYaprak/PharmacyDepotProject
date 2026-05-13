@@ -37,10 +37,10 @@ public abstract class ExceptionHandler
         };
 
     // Alt sınıfın implement etmesi zorunlu: iş kuralı hata işleme davranışını tanımlar
-    protected abstract Task HandleException(BusinessException businessException);
+    protected abstract Task BusinessHandleException(BusinessException businessException);
 
     // Alt sınıfın implement etmesi zorunlu: kayıt bulunamadı hata işleme davranışını tanımlar
-    protected abstract Task HandleException(NotFoundException notFoundException);
+    protected abstract Task NotFoundHandleException(NotFoundException notFoundException);
 
     // Alt sınıfın implement etmesi zorunlu: beklenmeyen hata işleme davranışını tanımlar
     protected abstract Task HandleException(Exception exception);
