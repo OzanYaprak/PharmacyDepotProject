@@ -71,8 +71,7 @@ public class RequestValidationBehavior<TRequest, TResponse> : IPipelineBehavior<
                 {
                     PropertyName = propertyName,
                     ErrorMessages = failures.Select(failure => failure.ErrorMessage)
-                })
-            .ToList();
+                }).ToList();
 
         // Herhangi bir doğrulama hatası varsa ValidationException fırlatılır.
         // Bu exception, ExceptionMiddleware tarafından yakalanıp HTTP 400 yanıtına dönüştürülür.
