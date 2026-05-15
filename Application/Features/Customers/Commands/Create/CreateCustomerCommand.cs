@@ -1,8 +1,9 @@
+using Application.Pipelines.Transaction;
 using MediatR;
 
 namespace Application.Features.Customers.Commands.Create;
 
-public class CreateCustomerCommand : IRequest<CreatedCustomerResponse>
+public class CreateCustomerCommand : IRequest<CreatedCustomerResponse> , ITransactionalRequest
 {
     public string Name { get; set; } = default!;
     public string LicenseNumber { get; set; } = default!;

@@ -1,11 +1,9 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Application.Pipelines.Transaction;
+using MediatR;
 
 namespace Application.Features.Drugs.Commands.Delete;
 
-public class DeleteDrugCommand : IRequest<DeleteDrugResponse>
+public class DeleteDrugCommand : IRequest<DeleteDrugResponse>, ITransactionalRequest
 {
     public Guid Id { get; set; }
 }

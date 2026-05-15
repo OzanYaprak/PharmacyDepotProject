@@ -8,7 +8,7 @@ namespace Application.Common.Responses;
 /// <typeparam name="T">Liste elemanının tipi.</typeparam>
 public class GetListResponse<T> : BasePageableModel
 {
-    private IList<T> _items;
+    private IList<T>? _items;
 
     public IList<T> Items
     {

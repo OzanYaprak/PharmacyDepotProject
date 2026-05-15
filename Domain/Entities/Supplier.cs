@@ -36,29 +36,29 @@ public class Supplier : BaseEntity<Guid>
     /// <summary>
     /// Tedarikçinin adı
     /// </summary>
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// İletişim görevlisinin adı
     /// </summary>
-    public string ContactPerson { get; set; }
+    public string? ContactPerson { get; set; }
 
     /// <summary>
     /// Tedarikçinin telefon numarası
     /// </summary>
-    public string Phone { get; set; }
+    public string? Phone { get; set; }
 
     /// <summary>
     /// Tedarikçinin e-posta adresi
     /// </summary>
-    public string Email { get; set; }
+    public string? Email { get; set; }
 
     /// <summary>
     /// Tedarikçinin fiziksel adres bilgisi
     /// </summary>
-    public string Address { get; set; }
+    public string? Address { get; set; }
 
     // Navigation Properties
     /// <summary>Bu tedarikçiye ait siparişler.</summary>
-    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+    public virtual ICollection<Order>? Orders { get; set; } = new List<Order>();
 }

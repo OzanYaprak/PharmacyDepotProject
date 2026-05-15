@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using Application.Pipelines.Transaction;
+using MediatR;
 
 namespace Application.Features.Drugs.Commands.Update;
 
-public class UpdateDrugCommand : IRequest<UpdateDrugResponse>
+public class UpdateDrugCommand : IRequest<UpdateDrugResponse>, ITransactionalRequest
 {
     public Guid Id { get; set; }
     public string? Name { get; set; }

@@ -26,7 +26,7 @@ public class GetListByDynamicOrderQueryHandler
     {
         Paginate<Order> orders = await _orderRepository
             .GetListByDynamicAsync(
-            dynamic: request.DynamicQuery,
+            dynamic: request.DynamicQuery!,
             pageNumber: request.PageRequest?.PageNumber ?? 0,
             pageSize: request.PageRequest?.PageSize ?? 10,
             withDeleted: true,

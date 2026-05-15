@@ -1,4 +1,5 @@
 using Application.Features.Customers.Rules;
+using Application.Pipelines.Transaction;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
@@ -27,7 +28,12 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
         Customer customer = _mapper.Map<Customer>(request);
         customer.Id = Guid.NewGuid();
 
+        // TransactionScopeBehavior will ensure that if any of the following operations fail, the entire transaction will be rolled back.
+        //Customer customer2 = _mapper.Map<Customer>(request);
+        //customer2.Id = Guid.NewGuid();
+
         var result = await _customerRepository.AddAsync(customer, cancellationToken);
+        //var result2 = await _customerRepository.AddAsync(customer2, cancellationToken);
 
         return _mapper.Map<CreatedCustomerResponse>(result);
     }

@@ -1,3 +1,4 @@
+using Application.Pipelines.Transaction;
 using Application.Pipelines.Validation;
 using Application.Rules;
 using FluentValidation;
@@ -30,7 +31,9 @@ public static class ApplicationServiceRegistration
         services.AddMediatR(cfg =>
         {
             cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+
             cfg.AddOpenBehavior(typeof(RequestValidationBehavior<,>)); // MediatR pipeline'ına doğrulama davranışı ekler.
+            cfg.AddOpenBehavior(typeof(TransactionScopeBehavior<,>)); // MediatR pipeline'ına transaction davranışı ekler.
         });
 
         // AutoMapper: Entity ↔ DTO ↔ Command/Response dönüşümlerini profil sınıfları üzerinden yönetir.

@@ -67,7 +67,7 @@ public class DrugBusinessRules : BaseBusinessRules
     /// <summary>
     /// Son kullanma tarihi geçmiş bir tarih olamaz.
     /// </summary>
-    public Task ExpireDateCannotBeInThePast(DateTime expireDate)
+    public Task ExpireDateCannotBeInThePast(DateTime? expireDate)
     {
         if (expireDate < DateTime.UtcNow)
             throw new BusinessException(DrugMessages.ExpireDateCannotBeInThePast);

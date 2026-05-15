@@ -1,8 +1,9 @@
+using Application.Pipelines.Transaction;
 using MediatR;
 
 namespace Application.Features.Suppliers.Commands.Update;
 
-public class UpdateSupplierCommand : IRequest<UpdatedSupplierResponse>
+public class UpdateSupplierCommand : IRequest<UpdatedSupplierResponse>, ITransactionalRequest
 {
     public Guid Id { get; set; }
     public string? Name { get; set; }

@@ -1,8 +1,9 @@
+using Application.Pipelines.Transaction;
 using MediatR;
 
 namespace Application.Features.Customers.Commands.Update;
 
-public class UpdateCustomerCommand : IRequest<UpdatedCustomerResponse>
+public class UpdateCustomerCommand : IRequest<UpdatedCustomerResponse>, ITransactionalRequest
 {
     public Guid Id { get; set; }
     public string? Name { get; set; }

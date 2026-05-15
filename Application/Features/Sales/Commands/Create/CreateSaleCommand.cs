@@ -1,8 +1,9 @@
+using Application.Pipelines.Transaction;
 using MediatR;
 
 namespace Application.Features.Sales.Commands.Create;
 
-public class CreateSaleCommand : IRequest<CreatedSaleResponse>
+public class CreateSaleCommand : IRequest<CreatedSaleResponse>, ITransactionalRequest
 {
     public Guid CustomerId { get; set; }
     public DateTime SaleDate { get; set; }

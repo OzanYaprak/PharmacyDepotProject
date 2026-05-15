@@ -1,8 +1,9 @@
+using Application.Pipelines.Transaction;
 using MediatR;
 
 namespace Application.Features.Stocks.Commands.Create;
 
-public class CreateStockCommand : IRequest<CreatedStockResponse>
+public class CreateStockCommand : IRequest<CreatedStockResponse>, ITransactionalRequest
 {
     public Guid DrugId { get; set; }
     public Guid WarehouseId { get; set; }

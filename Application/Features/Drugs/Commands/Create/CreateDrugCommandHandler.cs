@@ -25,14 +25,14 @@ public class CreateDrugCommandHandler : IRequestHandler<CreateDrugCommand, Creat
 
     public async Task<CreatedDrugResponse> Handle(CreateDrugCommand request, CancellationToken cancellationToken)
     {
-        await _drugBusinessRules.GtinCannotBeDuplicatedWhenInserted(request.GTIN);
-        await _drugBusinessRules.SerialNumberCannotBeDuplicatedWhenInserted(request.SN);
+        await _drugBusinessRules.GtinCannotBeDuplicatedWhenInserted(request.GTIN!);
+        await _drugBusinessRules.SerialNumberCannotBeDuplicatedWhenInserted(request.SN!);
         await _drugBusinessRules.ExpireDateCannotBeInThePast(request.ExpireDate);
 
         Drug drug = _mapper.Map<Drug>(request);
 
         drug.Id = Guid.NewGuid();
-        drug.ExpireDate = request.ExpireDate.AddYears(3);
+        drug.ExpireDate = request.ExpireDate.HasValue ? request.ExpireDate.Value.AddYears(3) : DateTime.MinValue;
 
         var result = await _drugRepository.AddAsync(drug);
 
