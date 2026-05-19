@@ -4,6 +4,7 @@ using Application.Features.Sales.Commands.Delete;
 using Application.Features.Sales.Commands.Update;
 using Application.Features.Sales.Queries.GetById;
 using Application.Features.Sales.Queries.GetList;
+using Application.Features.Sales.Queries.GetListByDynamic;
 using AutoMapper;
 using Domain.Entities;
 using Persistence.Paging;
@@ -27,10 +28,18 @@ public class SaleMappingProfiles : Profile
             .ForMember(destinationMember: dest => dest.CustomerName, memberOptions: opt => opt.MapFrom(src => src.Customer != null ? src.Customer.Name : string.Empty))
             .ReverseMap();
 
+        CreateMap<Sale, GetListByDynamicSaleListItemDto>()
+            .ForMember(destinationMember: dest => dest.CustomerName, memberOptions: opt => opt.MapFrom(src => src.Customer != null ? src.Customer.Name : string.Empty))
+            .ReverseMap();
+
         CreateMap<Sale, GetByIdSaleResponse>().ReverseMap();
 
         CreateMap<Paginate<Sale>, GetListResponse<GetListSaleListItemDto>>()
             .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.DataList ?? new List<Sale>()))
             .ForMember(dest => dest.DataList, opt => opt.Ignore()); ;
+
+        CreateMap<Paginate<Sale>, GetListResponse<GetListByDynamicSaleListItemDto>>()
+            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.DataList ?? new List<Sale>()))
+            .ForMember(dest => dest.DataList, opt => opt.Ignore());
     }
 }

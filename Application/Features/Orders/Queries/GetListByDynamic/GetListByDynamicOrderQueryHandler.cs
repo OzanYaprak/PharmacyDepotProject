@@ -1,14 +1,13 @@
 using Application.Common.Responses;
-using Application.Features.Drugs.Queries.GetListByDynamic;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using Persistence.Paging;
-using Persistence.Repositories.Drug;
 using Persistence.Repositories.Order;
 
 namespace Application.Features.Orders.Queries.GetListByDynamic;
 
-public class GetListByDynamicOrderQueryHandler
+public class GetListByDynamicOrderQueryHandler : IRequestHandler<GetListByDynamicOrderQuery, GetListResponse<GetListByDynamicOrderListItemDto>>
 {
     #region Constructor Injection
 

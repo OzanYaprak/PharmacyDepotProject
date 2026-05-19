@@ -4,6 +4,7 @@ using Application.Features.Customers.Commands.Delete;
 using Application.Features.Customers.Commands.Update;
 using Application.Features.Customers.Queries.GetById;
 using Application.Features.Customers.Queries.GetList;
+using Application.Features.Customers.Queries.GetListByDynamic;
 using AutoMapper;
 using Domain.Entities;
 using Persistence.Paging;
@@ -26,6 +27,9 @@ public class CustomerMappingProfiles : Profile
         CreateMap<Customer, GetListCustomerListItemDto>().ReverseMap();
         CreateMap<Customer, GetByIdCustomerResponse>().ReverseMap();
 
+        CreateMap<Customer, GetListByDynamicCustomerListItemDto>().ReverseMap();
+
         CreateMap<Paginate<Customer>, GetListResponse<GetListCustomerListItemDto>>().ReverseMap();
+        CreateMap<Paginate<Customer>, GetListResponse<GetListByDynamicCustomerListItemDto>>().ReverseMap();
     }
 }

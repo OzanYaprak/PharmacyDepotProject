@@ -4,6 +4,7 @@ using Application.Features.Suppliers.Commands.Delete;
 using Application.Features.Suppliers.Commands.Update;
 using Application.Features.Suppliers.Queries.GetById;
 using Application.Features.Suppliers.Queries.GetList;
+using Application.Features.Suppliers.Queries.GetListByDynamic;
 using AutoMapper;
 using Domain.Entities;
 using Persistence.Paging;
@@ -26,6 +27,9 @@ public class SupplierMappingProfiles : Profile
         CreateMap<Supplier, GetListSupplierListItemDto>().ReverseMap();
         CreateMap<Supplier, GetByIdSupplierResponse>().ReverseMap();
 
+        CreateMap<Supplier, GetListByDynamicSupplierListItemDto>().ReverseMap();
+
         CreateMap<Paginate<Supplier>, GetListResponse<GetListSupplierListItemDto>>().ReverseMap();
+        CreateMap<Paginate<Supplier>, GetListResponse<GetListByDynamicSupplierListItemDto>>().ReverseMap();
     }
 }

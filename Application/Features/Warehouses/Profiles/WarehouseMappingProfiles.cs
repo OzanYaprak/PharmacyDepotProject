@@ -4,6 +4,7 @@ using Application.Features.Warehouses.Commands.Delete;
 using Application.Features.Warehouses.Commands.Update;
 using Application.Features.Warehouses.Queries.GetById;
 using Application.Features.Warehouses.Queries.GetList;
+using Application.Features.Warehouses.Queries.GetListByDynamic;
 using AutoMapper;
 using Domain.Entities;
 using Persistence.Paging;
@@ -26,6 +27,9 @@ public class WarehouseMappingProfiles : Profile
         CreateMap<Warehouse, GetListWarehouseListItemDto>().ReverseMap();
         CreateMap<Warehouse, GetByIdWarehouseResponse>().ReverseMap();
 
+        CreateMap<Warehouse, GetListByDynamicWarehouseListItemDto>().ReverseMap();
+
         CreateMap<Paginate<Warehouse>, GetListResponse<GetListWarehouseListItemDto>>().ReverseMap();
+        CreateMap<Paginate<Warehouse>, GetListResponse<GetListByDynamicWarehouseListItemDto>>().ReverseMap();
     }
 }
