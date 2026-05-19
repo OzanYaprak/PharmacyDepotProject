@@ -1,13 +1,18 @@
+using Application.Pipelines.Caching.Remove;
 using Application.Pipelines.Transaction;
 using MediatR;
 
 namespace Application.Features.Customers.Commands.Create;
 
-public class CreateCustomerCommand : IRequest<CreatedCustomerResponse> , ITransactionalRequest
+public class CreateCustomerCommand : IRequest<CreatedCustomerResponse>, ITransactionalRequest, ICacheRemoverRequest
 {
     public string Name { get; set; } = default!;
     public string LicenseNumber { get; set; } = default!;
     public string Phone { get; set; } = default!;
     public string Email { get; set; } = default!;
     public string Address { get; set; } = default!;
+
+    public string? CacheKey => null;
+    public string? CacheGroupKey => "GetCustomersQuery";
+    public bool BypassCache => false;
 }

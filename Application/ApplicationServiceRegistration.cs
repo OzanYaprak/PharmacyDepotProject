@@ -1,7 +1,10 @@
+using Application.Pipelines.Caching.Add;
+using Application.Pipelines.Caching.Remove;
 using Application.Pipelines.Transaction;
 using Application.Pipelines.Validation;
 using Application.Rules;
 using FluentValidation;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -34,6 +37,8 @@ public static class ApplicationServiceRegistration
 
             cfg.AddOpenBehavior(typeof(RequestValidationBehavior<,>)); // MediatR pipeline'ına doğrulama davranışı ekler.
             cfg.AddOpenBehavior(typeof(TransactionScopeBehavior<,>)); // MediatR pipeline'ına transaction davranışı ekler.
+            cfg.AddOpenBehavior(typeof(CachingBehavior<,>)); // MediatR pipeline'ına caching davranışı ekler.
+            cfg.AddOpenBehavior(typeof(CacheRemovingBehavior<,>)); // MediatR pipeline'ına cache temizleme davranışı ekler.
         });
 
         // AutoMapper: Entity ↔ DTO ↔ Command/Response dönüşümlerini profil sınıfları üzerinden yönetir.

@@ -8,6 +8,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApplicationServices(); // Add services from the Application assembly
 builder.Services.AddPersistenceServices(builder.Configuration); // Add services from the Persistence assembly
 
+builder.Services.AddSingleton(builder.Configuration.GetSection("CacheSettings").Get<Application.Pipelines.Caching.CacheSettings>()!); // CacheSettings'i DI container'ına Singleton olarak kaydeder. Böylece uygulama boyunca tek bir instance kullanılır.
+
+//builder.Services.AddDistributedMemoryCache(); // In-memory cache kullanımı için gerekli servis
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetSection("Redis:Configuration").Value;
+    options.InstanceName = builder.Configuration.GetSection("Redis:InstanceName").Value;
+}); // Redis cache kullanımı için gerekli servis. appsettings.json'da Redis bağlantı ayarları yapılmalıdır.
+
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
