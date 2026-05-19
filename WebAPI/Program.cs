@@ -37,7 +37,7 @@ if (app.Environment.IsDevelopment())
 
 // Global hata yönetimi yalnızca Production ortamında aktif edilir.
 // Development ortamında varsayılan ASP.NET Core hata sayfası kullanılır.
-if (app.Environment.IsProduction())
+if (!app.Environment.IsProduction())
 {
     // ─── GLOBAL HATA YÖNETİMİ MİDDLEWARE ────────────────────────────────────────
     // ÖNEMLI: Bu middleware mümkün olduğunca ERKEN pipeline'a eklenmelidir.

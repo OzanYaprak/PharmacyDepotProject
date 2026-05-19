@@ -12,6 +12,7 @@ public class CreateCustomerCommand : IRequest<CreatedCustomerResponse>, ITransac
     public string Email { get; set; } = default!;
     public string Address { get; set; } = default!;
 
+
     public string? CacheKey => null;
     public string? CacheGroupKey => "GetCustomersQuery";
     public bool BypassCache => false;
