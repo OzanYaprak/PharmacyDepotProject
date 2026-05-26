@@ -1,5 +1,9 @@
 ﻿using CrossCuttingConcerns.Exceptions.Handlers;
+using CrossCuttingConcerns.Exceptions.Helpers;
+using CrossCuttingConcerns.Logging;
+using CrossCuttingConcerns.Serilog;
 using Microsoft.AspNetCore.Http;
+using System.Text.Json;
 
 namespace CrossCuttingConcerns.Exceptions.Middlewares;
 
@@ -24,13 +28,23 @@ public class ExceptionMiddleware
     // _httpExceptionHandler: exception'ı HTTP yanıtına dönüştürmekten sorumlu nesne.
     private readonly HttpExceptionHandler _httpExceptionHandler;
 
+    // _httpContextAccessor: HttpContext'a erişim sağlayan nesne (gerekirse).
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    // _loggerServiceBase: exception'ları loglamak için kullanılan logger nesnesi.
+    private readonly LoggerServiceBase _loggerService;
+
     /// <summary>
     /// ASP.NET Core DI container tarafından otomatik çağrılır.
     /// </summary>
     /// <param name="next">Pipeline'daki sonraki middleware delegesi.</param>
-    public ExceptionMiddleware(RequestDelegate next)
+    /// <param name="httpContextAccessor">HttpContext'e erişim sağlayan nesne.</param>
+    /// <param name="loggerService">Exception'ları loglamak için kullanılan logger nesnesi.</param>
+    public ExceptionMiddleware(RequestDelegate next, IHttpContextAccessor httpContextAccessor, LoggerServiceBase loggerService)
     {
         _next = next;
+        _httpContextAccessor = httpContextAccessor;
+        _loggerService = loggerService;
         // HttpExceptionHandler burada bir kez oluşturulur; her istek için Response property'si güncellenir.
         _httpExceptionHandler = new HttpExceptionHandler();
     }
@@ -51,10 +65,51 @@ public class ExceptionMiddleware
         }
         catch (Exception exception)
         {
+            // Exception yakalandığında önce loglanır, sonra uygun HTTP yanıtı hazırlanır.
+            // Loglama işlemi senkron olarak yapılır (LogException Task.CompletedTask döndürüyor).
+            // Loglama, exception'ın detaylarını (mesaj, stack trace, vb.) içerir.
+            await LogException(httpContext, exception);
+
             // Pipeline'ın herhangi bir yerinde exception fırlarsa burası devreye girer.
             // httpContext.Response: istemciye gönderilecek HTTP yanıtı nesnesi.
             await HandleExceptionAsync(httpContext.Response, exception);
         }
+    }
+
+    /// <summary>
+    /// Yapılandırılmış logger servisi aracılığıyla exception detaylarını loglar.
+    /// </summary>
+    /// <param name="httpContext">Mevcut HTTP bağlamı.</param>
+    /// <param name="exception">Loglanacak exception.</param>
+    /// <returns>Asenkron işlemi temsil eden görev nesnesi.</returns>
+    private Task LogException(HttpContext httpContext, Exception exception)
+    {
+        List<LogParameter> logParameters = new List<LogParameter>()
+        {
+            new LogParameter
+            {
+                Name = exception.GetType().Name,
+                Type = exception.GetType().Name,
+                Value = exception.GetType().FullName ?? exception.GetType().Name 
+            }
+        };
+
+        var user = httpContext?.User?.Identity?.Name;
+        var requestPath = httpContext?.Request?.Path.Value ?? string.Empty;
+        var requestMethod = httpContext?.Request?.Method ?? string.Empty;
+
+        LogDetailWithException logDetail = new LogDetailWithException
+        {
+            Fullname = exception.GetType().FullName ?? exception.GetType().Name,
+            MethodName = $"[{requestMethod}] {requestPath} - Exception",
+            Parameters = logParameters,
+            User = string.IsNullOrWhiteSpace(user) ? "Anonymous" : user!, 
+            ExceptionMessage = CharacterTransliteration.TransliterateToEnglish(exception.Message)
+        };
+
+        _loggerService.Error(JsonSerializer.Serialize(logDetail));
+
+        return Task.CompletedTask;
     }
 
     /// <summary>

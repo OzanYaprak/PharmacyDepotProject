@@ -10,6 +10,8 @@ builder.Services.AddPersistenceServices(builder.Configuration); // Add services 
 
 builder.Services.AddSingleton(builder.Configuration.GetSection("CacheSettings").Get<Application.Pipelines.Caching.CacheSettings>()!); // CacheSettings'i DI container'ına Singleton olarak kaydeder. Böylece uygulama boyunca tek bir instance kullanılır.
 
+builder.Services.AddHttpContextAccessor(); // IHttpContextAccessor servisini ekler. Bu servis, MediatR pipeline'ındaki LoggingBehavior gibi sınıfların HTTP context bilgilerine erişmesini sağlar.
+
 //builder.Services.AddDistributedMemoryCache(); // In-memory cache kullanımı için gerekli servis
 builder.Services.AddStackExchangeRedisCache(options =>
 {
@@ -19,8 +21,8 @@ builder.Services.AddStackExchangeRedisCache(options =>
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
-
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(x =>
 {
     x.SwaggerDoc("v1", new OpenApiInfo { Title = "Pharmacy Depot API", Version = "v1" });
@@ -49,11 +51,8 @@ if (!app.Environment.IsProduction())
     app.UseCustomExceptionMiddleware();
 }
 
-
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

@@ -1,10 +1,11 @@
 using Application.Pipelines.Caching.Remove;
+using Application.Pipelines.Logging;
 using Application.Pipelines.Transaction;
 using MediatR;
 
 namespace Application.Features.Customers.Commands.Create;
 
-public class CreateCustomerCommand : IRequest<CreatedCustomerResponse>, ITransactionalRequest, ICacheRemoverRequest
+public class CreateCustomerCommand : IRequest<CreatedCustomerResponse>, ITransactionalRequest, ICacheRemoverRequest, ILoggableRequest
 {
     public string Name { get; set; } = default!;
     public string LicenseNumber { get; set; } = default!;

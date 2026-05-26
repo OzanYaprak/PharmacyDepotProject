@@ -1,6 +1,5 @@
 using Application.Features.Customers.Constants;
 using Application.Rules;
-using Azure.Core;
 using CrossCuttingConcerns.Exceptions.Types;
 using Domain.Entities;
 using Persistence.Repositories.Customer;

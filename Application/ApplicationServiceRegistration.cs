@@ -1,8 +1,11 @@
 using Application.Pipelines.Caching.Add;
 using Application.Pipelines.Caching.Remove;
+using Application.Pipelines.Logging;
 using Application.Pipelines.Transaction;
 using Application.Pipelines.Validation;
 using Application.Rules;
+using CrossCuttingConcerns.Serilog;
+using CrossCuttingConcerns.Serilog.Loggers;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,7 +42,13 @@ public static class ApplicationServiceRegistration
             cfg.AddOpenBehavior(typeof(TransactionScopeBehavior<,>)); // MediatR pipeline'ına transaction davranışı ekler.
             cfg.AddOpenBehavior(typeof(CachingBehavior<,>)); // MediatR pipeline'ına caching davranışı ekler.
             cfg.AddOpenBehavior(typeof(CacheRemovingBehavior<,>)); // MediatR pipeline'ına cache temizleme davranışı ekler.
+            cfg.AddOpenBehavior(typeof(LoggingBehavior<,>)); // MediatR pipeline'ına logging davranışı ekler.
         });
+
+        // Serilog: Uygulama genelinde loglama için kullanılır. FileLogger, logları dosyaya yazar.
+        //services.AddSingleton<LoggerServiceBase, FileLogger>(); 
+        // MssqlLogger, logları SQL Server veritabanına yazar. Loglama stratejisi değişirse tek satırda değiştirmek yeterlidir.
+        services.AddSingleton<LoggerServiceBase, MssqlLogger>(); 
 
         // AutoMapper: Entity ↔ DTO ↔ Command/Response dönüşümlerini profil sınıfları üzerinden yönetir.
         // AddMaps: tüm MappingProfile türevlerini aynı assembly'de otomatik tarar.

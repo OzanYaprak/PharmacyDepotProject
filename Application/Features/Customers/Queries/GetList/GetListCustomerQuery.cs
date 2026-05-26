@@ -2,10 +2,11 @@ using Application.Common.Responses;
 using MediatR;
 using Application.Common.Requests;
 using Application.Pipelines.Caching.Add;
+using Application.Pipelines.Logging;
 
 namespace Application.Features.Customers.Queries.GetList;
 
-public class GetListCustomerQuery : IRequest<GetListResponse<GetListCustomerListItemDto>>, ICacheableRequest
+public class GetListCustomerQuery : IRequest<GetListResponse<GetListCustomerListItemDto>>, ICacheableRequest, ILoggableRequest
 {
     public PageRequest? PageRequest { get; set; }
 
