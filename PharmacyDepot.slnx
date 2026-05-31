@@ -4,5 +4,6 @@
   <Project Path="Domain/Domain.csproj" />
   <Project Path="Infrastructure/Infrastructure.csproj" />
   <Project Path="Persistence/Persistence.csproj" />
+  <Project Path="Security/Security.csproj" Id="5dd21717-fc9c-41e7-92d6-adea72c67777" />
   <Project Path="WebAPI/WebAPI.csproj" />
 </Solution>
