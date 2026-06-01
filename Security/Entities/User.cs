@@ -1,4 +1,5 @@
 ﻿using Domain.Entities.Base;
+using Security.Enums;
 
 namespace Security.Entities;
 
@@ -46,6 +47,7 @@ public class User : BaseEntity<int>
     public byte[] PasswordSalt { get; set; }
     public byte[] PasswordHash { get; set; }
     public bool IsActive { get; set; }
+    public AuthenticatorType AuthenticatorType { get; set; }
 
     #endregion
 
