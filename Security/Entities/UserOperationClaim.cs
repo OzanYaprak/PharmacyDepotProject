@@ -6,6 +6,11 @@ public class UserOperationClaim : BaseEntity<int>
 {
     #region Constructors
 
+    public UserOperationClaim()
+    {
+        
+    }
+
     public UserOperationClaim(int userId, int operationClaimId)
     {
         UserId = userId;
