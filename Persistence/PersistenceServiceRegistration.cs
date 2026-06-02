@@ -4,12 +4,19 @@ using Microsoft.Extensions.DependencyInjection;
 using Persistence.Contexts;
 using Persistence.Repositories.Customer;
 using Persistence.Repositories.Drug;
+using Persistence.Repositories.Email;
+using Persistence.Repositories.EmailAuthenticator;
+using Persistence.Repositories.OperationClaim;
 using Persistence.Repositories.Order;
 using Persistence.Repositories.OrderItem;
+using Persistence.Repositories.OtpAuthenticator;
+using Persistence.Repositories.RefreshToken;
 using Persistence.Repositories.Sale;
 using Persistence.Repositories.SaleItem;
 using Persistence.Repositories.Stock;
 using Persistence.Repositories.Supplier;
+using Persistence.Repositories.User;
+using Persistence.Repositories.UserOperationClaim;
 using Persistence.Repositories.Warehouse;
 
 namespace Persistence;
@@ -30,6 +37,13 @@ public static class PersistenceServiceRegistration
         services.AddScoped<IStockRepository, StockRepository>();
         services.AddScoped<ISupplierRepository, SupplierRepository>();
         services.AddScoped<IWarehouseRepository, WarehouseRepository>();
+
+        services.AddScoped<IEmailAuthenticatorRepository, EmailAuthenticatorRepository>();
+        services.AddScoped<IOperationClaimRepository, OperationClaimRepository>();
+        services.AddScoped<IOtpAuthenticatorRepository, OtpAuthenticatorRepository>();
+        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserOperationClaimRepository, UserOperationClaimRepository>();
 
         return services;
     }
