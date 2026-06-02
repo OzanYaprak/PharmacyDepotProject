@@ -1,5 +1,7 @@
-﻿using MediatR;
+﻿using CrossCuttingConcerns.Exceptions.Types;
+using MediatR;
 using Microsoft.AspNetCore.Http;
+using Security.Constants;
 using Security.Extensions;
 
 namespace Application.Pipelines.Authorization;
@@ -23,9 +25,8 @@ public class AuthorizationBehavior<TRequest, TResponse> : IPipelineBehavior<TReq
             throw new AuthorizationException("You are not authenticated.");
         }
 
-        bool isNotMatchedAUserRoleClaimWithRequestRoles = userRoleClaims
-            .FirstOrDefault(userRoleClaim => userRoleClaim == GeneralOperationClaims.Admin || request.Roles.Any(role => role == userRoleClaim)
-            ).IsNullOrEmpty();
+        bool isNotMatchedAUserRoleClaimWithRequestRoles = string.IsNullOrEmpty(userRoleClaims
+            .FirstOrDefault(userRoleClaim => userRoleClaim == GeneralOperationClaims.Admin || request.Roles.Any(role => role == userRoleClaim)));
 
         if (isNotMatchedAUserRoleClaimWithRequestRoles)
         {
