@@ -4,6 +4,7 @@ using MediatR;
 using Persistence.Repositories.User;
 using Security.Entities;
 using Security.Hashing;
+using static Application.Features.Users.Constants.UsersOperationClaims;
 
 namespace Application.Features.Users.Commands.Create;
 

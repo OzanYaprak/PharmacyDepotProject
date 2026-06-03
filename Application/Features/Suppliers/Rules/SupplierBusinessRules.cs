@@ -6,25 +6,15 @@ using Persistence.Repositories.Supplier;
 
 namespace Application.Features.Suppliers.Rules;
 
-public class SupplierBusinessRules : BaseBusinessRules
+public class SupplierBusinessRules(ISupplierRepository supplierRepository) : BaseBusinessRules
 {
-    #region Constructor And Fields
-
-    private readonly ISupplierRepository _supplierRepository;
-    public SupplierBusinessRules(ISupplierRepository supplierRepository)
-    {
-        _supplierRepository = supplierRepository;
-    }
-
-    #endregion
-
     /// <summary>
     /// Insert sırasında aynı telefon numarasına sahip tedarikçi olmamalıdır.
     /// </summary>
     public async Task PhoneNumberCannotBeDuplicatedWhenInserted(string phone)
     {
-        Supplier? supplier = await _supplierRepository.GetAsync(
-            predicate: s => s.Phone.Replace(" ", "").Replace("-", "") == phone.Replace(" ", "").Replace("-", "").Replace("+", ""));
+        Supplier? supplier = await supplierRepository.GetAsync(
+            predicate: s => s.Phone != null && s.Phone.Replace(" ", "").Replace("-", "") == phone.Replace(" ", "").Replace("-", "").Replace("+", ""));
 
         if (supplier != null)
             throw new BusinessException(SupplierMessages.PhoneNumberExists);
@@ -35,10 +25,10 @@ public class SupplierBusinessRules : BaseBusinessRules
     /// </summary>
     public async Task PhoneNumberCannotBeDuplicatedWhenUpdated(Guid id, string phone)
     {
-        var dbList = await _supplierRepository.GetListAsync(predicate: s => s.Id != id);
+        var dbList = await supplierRepository.GetListAsync(predicate: s => s.Id != id);
         List<Supplier>? list = dbList.DataList?.ToList();
 
-        if (list?.Any(s => s.Phone.Replace(" ", "").Replace("-", "") == phone.Replace(" ", "").Replace("-", "").Replace("+", "")) == true)
+        if (list?.Any(s => s.Phone != null && s.Phone.Replace(" ", "").Replace("-", "") == phone.Replace(" ", "").Replace("-", "").Replace("+", "")) is true)
             throw new BusinessException(SupplierMessages.PhoneNumberExists);
     }
 
@@ -47,8 +37,8 @@ public class SupplierBusinessRules : BaseBusinessRules
     /// </summary>
     public async Task EmailCannotBeDuplicatedWhenInserted(string email)
     {
-        Supplier? supplier = await _supplierRepository.GetAsync(
-            predicate: s => s.Email.ToLower() == email.ToLower());
+        Supplier? supplier = await supplierRepository.GetAsync(
+            predicate: s => s.Email != null && string.Equals(s.Email, email, StringComparison.OrdinalIgnoreCase));
 
         if (supplier != null)
             throw new BusinessException(SupplierMessages.EmailExists);
@@ -59,10 +49,10 @@ public class SupplierBusinessRules : BaseBusinessRules
     /// </summary>
     public async Task EmailCannotBeDuplicatedWhenUpdated(Guid id, string email)
     {
-        var dbList = await _supplierRepository.GetListAsync(predicate: s => s.Id != id);
+        var dbList = await supplierRepository.GetListAsync(predicate: s => s.Id != id);
         List<Supplier>? list = dbList.DataList?.ToList();
 
-        if (list?.Any(s => s.Email.ToLower() == email.ToLower()) == true)
+        if (list?.Any(s => s.Email != null && string.Equals(s.Email, email, StringComparison.OrdinalIgnoreCase)) is true)
             throw new BusinessException(SupplierMessages.EmailExists);
     }
 }

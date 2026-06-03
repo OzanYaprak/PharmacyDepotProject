@@ -23,7 +23,6 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Creat
     public async Task<CreatedUserResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         await _userBusinessRules.UserEmailShouldNotExistsWhenInsert(request.Email);
-        
         User user = _mapper.Map<User>(request);
 
         HashingHelper.CreatePasswordHash(
@@ -33,7 +32,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Creat
         );
         user.PasswordHash = passwordHash;
         user.PasswordSalt = passwordSalt;
-        User createdUser = await _userRepository.AddAsync(user);
+        User createdUser = await _userRepository.AddAsync(user, cancellationToken);
 
         CreatedUserResponse response = _mapper.Map<CreatedUserResponse>(createdUser);
         return response;
